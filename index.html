@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sunil OS</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b1120">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+  :root{color-scheme:dark}
+  html,body{margin:0;height:100%;background:#0b1120;color:#e5e7eb;font-family:"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden}
+  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+  #pop{position:fixed;top:8px;right:8px;z-index:5;background:rgba(15,23,42,.85);color:#94a3b8;border:1px solid #23314f;
+       border-radius:8px;padding:5px 9px;font-size:11px;text-decoration:none}
+  #pop:hover{color:#f59e0b}
+  #help{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:#0b1120;z-index:4}
+  #help .box{max-width:420px;text-align:center;background:#111a2e;border:1px solid #23314f;border-radius:12px;padding:22px}
+  #help a.btn{display:inline-block;margin-top:12px;background:#f59e0b;color:#111;padding:10px 16px;border-radius:8px;font-weight:600;text-decoration:none}
+  #help p{color:#94a3b8;font-size:13px;line-height:1.5}
+</style>
+</head>
+<body>
+<!-- ▼▼ The only line to edit: your Apps Script web-app URL (Deploy → Manage deployments → Web app URL, ends in /exec) ▼▼ -->
+<script>const APP_URL = 'https://script.google.com/macros/s/AKfycbzVJrzO2Hx_eNfyhUT7XJrRcgIQqAKv8kc1TkkuQZG3FO0AW0cxzD4ZjNdDMNhMYJ0p/exec';</script>
+
+<iframe id="app" title="Sunil OS" allow="clipboard-write; autoplay"></iframe>
+<a id="pop" target="_blank" rel="noopener">Open full window ↗</a>
+<div id="help"><div class="box">
+  <h2 style="margin:0 0 6px">Sunil OS</h2>
+  <p>The app could not load inside this page. This usually means you are not signed in to Google in this browser, or the browser blocks Google sign-in inside other sites (Safari / iPhone).</p>
+  <a class="btn" id="open" target="_blank" rel="noopener">Open Sunil OS →</a>
+</div></div>
+
+<script>
+  const f = document.getElementById('app'), help = document.getElementById('help');
+  document.getElementById('pop').href = document.getElementById('open').href = APP_URL;
+  if (!/^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL)) {
+    help.style.display = 'flex';
+    help.querySelector('p').textContent = 'Setup step left: paste your Apps Script /exec URL into APP_URL in index.html.';
+  } else {
+    let loaded = false;
+    f.onload = () => { loaded = true; };
+    f.src = APP_URL;
+    setTimeout(() => { if (!loaded) help.style.display = 'flex'; }, 12000);
+  }
+</script>
+</body>
+</html>
