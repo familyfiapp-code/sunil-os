@@ -43,7 +43,7 @@
     help.querySelector('p').textContent = 'Setup step left: paste your Apps Script /exec URL into APP_URL in index.html.';
   } else {
     let loaded = false;
-    f.onload = () => { loaded = true; };
+    f.onload = () => { loaded = true; setTimeout(() => { document.getElementById('pop').style.display = 'none'; }, 4000); };
     f.src = APP_URL;
     setTimeout(() => { if (!loaded) help.style.display = 'flex'; }, 12000);
   }
