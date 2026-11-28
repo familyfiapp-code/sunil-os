@@ -3,50 +3,1110 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sunil OS</title>
-<meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0b1120">
+<meta name="theme-color" content="#070b17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sunil OS">
+<meta name="robots" content="noindex">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<title>Sunil OS</title>
 <style>
-  :root{color-scheme:dark}
-  html,body{margin:0;height:100%;background:#0b1120;color:#e5e7eb;font-family:"Segoe UI",Roboto,Arial,sans-serif;overflow:hidden}
-  iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
-  #pop{position:fixed;top:8px;right:8px;z-index:5;background:rgba(15,23,42,.85);color:#94a3b8;border:1px solid #23314f;
-       border-radius:8px;padding:5px 9px;font-size:11px;text-decoration:none}
-  #pop:hover{color:#f59e0b}
-  #help{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:#0b1120;z-index:4}
-  #help .box{max-width:420px;text-align:center;background:#111a2e;border:1px solid #23314f;border-radius:12px;padding:22px}
-  #help a.btn{display:inline-block;margin-top:12px;background:#f59e0b;color:#111;padding:10px 16px;border-radius:8px;font-weight:600;text-decoration:none}
-  #help p{color:#94a3b8;font-size:13px;line-height:1.5}
+:root{
+  --bg:#070b17; --bg2:#0b1222; --card:#0f1729; --card2:#16213a; --line:rgba(148,163,184,.14); --line2:rgba(148,163,184,.24);
+  --text:#f1f5f9; --muted:#93a3bd; --dim:#64748b;
+  --amber:#f59e0b; --amber2:#fbbf24; --orange:#f97316; --good:#34d399; --bad:#fb7185; --blue:#60a5fa; --violet:#a78bfa; --teal:#2dd4bf; --pink:#f472b6;
+  --grad:linear-gradient(135deg,#fbbf24,#f97316);
+  --r:18px; --pad:clamp(14px,3vw,28px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(900px 500px at 0% -10%,rgba(245,158,11,.10),transparent 60%),radial-gradient(900px 500px at 100% 0%,rgba(167,139,250,.10),transparent 60%),var(--bg);
+  background-attachment:fixed;color:var(--text);font:15px/1.5 Inter,'Segoe UI',Roboto,Arial,sans-serif;min-height:100vh;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+button{font:inherit;color:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:var(--text);background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:10px 12px;width:100%;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--amber)}
+textarea{min-height:84px;resize:vertical}
+a{color:var(--amber2);text-decoration:none}
+.hidden{display:none!important}
+.muted{color:var(--muted)} .dim{color:var(--dim)} .good{color:var(--good)} .bad{color:var(--bad)} .amber{color:var(--amber2)}
+.small{font-size:12.5px} .tiny{font-size:11px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(7,11,23,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hbar{max-width:1180px;margin:auto;padding:12px var(--pad);display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;flex:none}
+.hello{min-width:0}.hello b{display:block;font-size:17px;font-weight:800;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hello span{white-space:nowrap}
+@media(max-width:480px){.hello b{font-size:15px}.save span{display:none}.chip.exam{padding:5px 9px;font-size:11.5px}.hbar{gap:9px}.logo{width:34px;height:34px}}
+.hello span{font-size:12px;color:var(--muted)}
+.hright{margin-left:auto;display:flex;align-items:center;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;border:1px solid var(--line2);background:var(--card);font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip.exam{border-color:rgba(249,115,22,.55);background:rgba(249,115,22,.12);color:#fdba74}
+.chip.exam b{font-size:15px;color:#fff}
+.save{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;white-space:nowrap}
+.save i{width:7px;height:7px;border-radius:50%;background:var(--good);display:inline-block}
+.save.busy i{background:var(--amber);animation:blink 1s infinite}
+.save.err i{background:var(--bad)}
+@keyframes blink{50%{opacity:.25}}
+.iconbtn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line2);background:var(--card);display:grid;place-items:center;font-size:17px;flex:none}
+
+/* layout */
+main{max-width:1180px;margin:auto;padding:16px var(--pad) 24px}
+.cols{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:960px){.cols{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}}
+.stack{display:grid;gap:16px;align-content:start;min-width:0}
+.cols>*,.grid2>*{min-width:0}
+.grid2{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.025),transparent),var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card h2{margin:0 0 12px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.card h2 .t{display:flex;align-items:center;gap:8px}
+.sec{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:6px 2px 10px}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:700;background:var(--grad);color:#1a1205;display:inline-flex;align-items:center;gap:7px;justify-content:center}
+.btn.ghost{background:var(--card2);color:var(--text);border:1px solid var(--line2);font-weight:600}
+.btn.sm{padding:7px 11px;border-radius:10px;font-size:13px}
+.btn.good{background:var(--good);color:#052e1c}
+.btn:active{transform:scale(.97)}
+.link{background:none;border:0;color:var(--amber2);font-weight:600;padding:0;font-size:13px}
+.pill{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--card2);color:var(--muted);white-space:nowrap}
+.pill.good{background:rgba(52,211,153,.14);color:var(--good)} .pill.bad{background:rgba(251,113,133,.14);color:var(--bad)}
+.pill.amber{background:rgba(245,158,11,.15);color:var(--amber2)} .pill.blue{background:rgba(96,165,250,.14);color:var(--blue)}
+.bar{height:8px;border-radius:99px;background:rgba(148,163,184,.14);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;background:var(--grad);transition:width .5s}
+.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line2);border-radius:14px;font-size:14px}
+
+/* NOW card */
+.now{position:relative;overflow:hidden;border:1px solid rgba(245,158,11,.38);background:radial-gradient(500px 220px at 100% 0%,rgba(249,115,22,.18),transparent 70%),linear-gradient(180deg,rgba(245,158,11,.06),transparent),var(--card)}
+.now .lbl{font-size:11px;letter-spacing:1.6px;font-weight:800;color:var(--amber2);display:flex;align-items:center;gap:8px}
+.now .lbl .dot{width:8px;height:8px;border-radius:50%;background:var(--bad);box-shadow:0 0 0 0 rgba(251,113,133,.7);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 9px rgba(251,113,133,0)}100%{box-shadow:0 0 0 0 rgba(251,113,133,0)}}
+.now h3{margin:8px 0 6px;font-size:clamp(19px,2.4vw,24px);line-height:1.3;font-weight:800;letter-spacing:-.4px}
+.now .meta{color:var(--muted);font-size:13px;margin-bottom:12px}
+.now .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.now .acts .btn{flex:1 1 0;min-width:0;padding:11px 8px}
+
+/* day stats tiles */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center;position:relative}
+.tile b{display:block;font-size:20px;font-weight:800;letter-spacing:-.4px}
+.tile small{color:var(--muted);font-size:11.5px}
+.tile .mini{height:5px;margin-top:8px}
+button.tile{width:100%}
+
+/* timeline */
+.dnav{display:flex;align-items:center;gap:6px}
+.dnav button{width:30px;height:30px;border-radius:9px;border:1px solid var(--line2);background:var(--card2)}
+.tl{position:relative;margin-top:4px}
+.tli{display:grid;grid-template-columns:64px 26px 1fr;gap:8px;align-items:start;padding:9px 0;position:relative}
+.tli:not(:last-child)::after{content:"";position:absolute;left:84px;top:34px;bottom:-9px;width:2px;background:var(--line)}
+.tli .tm{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:3px;line-height:1.25}
+.tli .tm b{display:block;color:var(--text);font-size:13px}
+.ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--line2);background:var(--bg2);display:grid;place-items:center;font-size:13px;font-weight:900;color:#052e1c;padding:0;position:relative;z-index:1}
+.tli.done .ck{background:var(--good);border-color:var(--good)}
+.tli.now .ck{border-color:var(--amber);box-shadow:0 0 0 4px rgba(245,158,11,.18)}
+.tli.missed .ck{border-color:var(--bad)}
+.tli.skip .ck{background:var(--card2);color:var(--muted)}
+.tli .bd{min-width:0}
+.tli .bt{font-size:14.5px;line-height:1.4;word-wrap:break-word;cursor:pointer}
+.tli.done .bt,.tli.skip .bt{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(148,163,184,.5)}
+.tli .tags{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap;align-items:center}
+.k{font-size:10px;font-weight:800;letter-spacing:.8px;padding:2px 7px;border-radius:6px}
+.k-exam{background:rgba(251,113,133,.16);color:#fda4af} .k-mock{background:rgba(167,139,250,.16);color:#c4b5fd}
+.k-practice{background:rgba(96,165,250,.15);color:#93c5fd} .k-read{background:rgba(45,212,191,.14);color:#5eead4}
+.k-review{background:rgba(244,114,182,.14);color:#f9a8d4} .k-life{background:rgba(148,163,184,.14);color:#cbd5e1}
+.k-deadline{background:rgba(245,158,11,.18);color:var(--amber2)}
+.tli.now{background:linear-gradient(90deg,rgba(245,158,11,.08),transparent);border-radius:12px}
+.xbtn{background:none;border:0;color:var(--dim);font-size:13px;padding:2px 4px}
+
+/* habits */
+.habits{display:flex;flex-wrap:wrap;gap:8px}
+.hb{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;border:1px solid var(--line2);background:var(--card2);font-size:13px;font-weight:600}
+.hb.on{background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.5);color:#a7f3d0}
+.hb .i{font-size:15px}
+
+/* tasks */
+.task{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}
+.task:last-child{border-bottom:0}
+.task .ck{width:22px;height:22px;flex:none;margin-top:1px}
+.task.done .ck{background:var(--good);border-color:var(--good)}
+.task.done .tt{color:var(--muted);text-decoration:line-through}
+.tt{font-size:14px;line-height:1.4}
+.qadd{display:flex;gap:8px;margin-top:10px}
+.qadd input{padding:9px 12px}
+
+/* chips filter */
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.seg button{border:1px solid var(--line2);background:var(--card2);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--amber);border-color:var(--amber);color:#1a1205}
+
+/* plan tab */
+.road{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding-bottom:4px}
+.step{flex:1 1 0;min-width:0;text-align:center;position:relative;padding:4px 2px;background:none;border:0}
+.step small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:480px){.step .c{width:38px;height:38px;font-size:11.5px}.step:not(:last-child)::after{top:23px;left:calc(50% + 21px);right:calc(-50% + 21px)}}
+.step .c{width:44px;height:44px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-weight:800;font-size:13px;border:2px solid var(--line2);background:var(--card2);position:relative;z-index:1}
+.step.cur .c{border-color:var(--amber);background:rgba(245,158,11,.15);color:var(--amber2);box-shadow:0 0 0 6px rgba(245,158,11,.10)}
+.step.ok .c{border-color:var(--good);background:var(--good);color:#052e1c}
+.step:not(:last-child)::after{content:"";position:absolute;top:26px;left:calc(50% + 24px);right:calc(-50% + 24px);height:2px;background:var(--line2)}
+.step.ok:not(:last-child)::after{background:var(--good)}
+.step b{display:block;font-size:13px} .step small{color:var(--muted);font-size:11px}
+.phase{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4px;margin:14px 0 8px;position:relative}
+.phase div{height:10px;border-radius:6px;background:var(--card2)}
+.phase div.on{background:var(--grad)}
+.phase div.past{background:rgba(52,211,153,.5)}
+.phlbl{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4px;font-size:11px;color:var(--muted)}
+.phlbl span.on{color:var(--amber2);font-weight:700}
+.big{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.wd{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:8px 2px;text-align:center;font-size:10.5px;min-width:0;overflow:hidden;white-space:nowrap}
+.wd b{display:block;font-size:15px;margin:2px 0}
+.wd.today{border-color:var(--amber)}
+.wd .ic{font-size:13px;min-height:18px}
+.ms{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.ms:last-child{border-bottom:0}
+.ms .e{font-size:22px;text-align:center}
+.goal{padding:12px 0;border-bottom:1px solid var(--line)} .goal:last-child{border-bottom:0}
+.goal input[type=range]{padding:0;background:none;border:0;accent-color:var(--amber)}
+
+/* progress tab */
+.score{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:560px){.score{grid-template-columns:repeat(2,1fr)}}
+.heat{display:grid;grid-template-columns:repeat(7,minmax(0,30px));gap:5px;justify-content:center}
+.heat div{aspect-ratio:1;border-radius:6px;background:var(--card2);position:relative}
+.heat div[data-l="1"]{background:rgba(245,158,11,.25)} .heat div[data-l="2"]{background:rgba(245,158,11,.5)}
+.heat div[data-l="3"]{background:rgba(245,158,11,.8)} .heat div[data-l="4"]{background:var(--good)}
+.heat div.t{outline:2px solid var(--text);outline-offset:1px}
+.heat span{font-size:10px;color:var(--dim);text-align:center}
+.rq{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.rq:last-child{border-bottom:0}
+.rq .n{width:26px;height:26px;border-radius:8px;background:var(--card2);display:grid;place-items:center;font-weight:800;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left} th{color:var(--muted);font-weight:600;font-size:12px}
+details summary{cursor:pointer;color:var(--amber2);font-weight:600;font-size:13px;margin-top:10px}
+.hgrid{display:grid;grid-template-columns:1fr repeat(7,22px);gap:5px;align-items:center;font-size:13px}
+.hgrid i{width:22px;height:22px;border-radius:6px;background:var(--card2);display:block}
+.hgrid i.on{background:var(--good)}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:112px}
+.bars div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;font-size:10.5px;color:var(--muted)}
+.bars div i{width:100%;max-width:28px;border-radius:6px 6px 3px 3px;background:var(--blue);min-height:3px}
+.bars div i.over{background:var(--bad)}
+
+/* error log */
+.ebar{display:grid;grid-template-columns:120px 1fr 34px;gap:8px;align-items:center;font-size:13px;margin:6px 0}
+.ebar .bar{height:10px}
+.ebar .bar>i{background:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid var(--line2);background:var(--card2);border-radius:999px;padding:7px 11px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.chips button.on{background:rgba(251,113,133,.16);border-color:var(--bad);color:#fecdd3}
+.trap{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px} .trap:last-child{border-bottom:0}
+.tl5{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:6px}
+.tl5 span{font-size:10.5px;text-align:center;border-radius:6px;padding:3px 0;background:var(--card2);color:var(--muted)}
+.tl5 span.lo{background:rgba(251,113,133,.16);color:#fda4af} .tl5 span.hi{background:rgba(52,211,153,.14);color:var(--good)}
+/* journal */
+.moods{display:flex;gap:6px}
+.moods button{flex:1;font-size:24px;padding:8px 0;border-radius:12px;border:1px solid var(--line2);background:var(--card2)}
+.moods button.on{border-color:var(--amber);background:rgba(245,158,11,.15)}
+.entry{padding:10px 0;border-bottom:1px solid var(--line)} .entry:last-child{border-bottom:0}
+.lane{background:var(--card2);border-radius:14px;padding:10px}
+.lane h4{margin:0 0 8px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.idea{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;font-size:13.5px}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(9,14,28,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.nwrap{max-width:560px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
+.nb{background:none;border:0;color:var(--dim);padding:10px 0 9px;font-size:11px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px}
+.nb svg{width:22px;height:22px}
+.nb.on{color:var(--amber2)}
+.fab{width:56px;height:56px;margin:-22px auto 0;border-radius:18px;border:0;background:var(--grad);display:grid;place-items:center;box-shadow:0 10px 30px rgba(249,115,22,.4);color:#1a1205}
+.fab svg{width:26px;height:26px}
+
+/* sheet (modal) */
+.ov{position:fixed;inset:0;background:rgba(2,6,16,.66);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov.show{display:flex}
+.sheet{width:100%;max-width:560px;max-height:92vh;overflow:auto;background:var(--bg2);border:1px solid var(--line2);border-radius:22px 22px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));animation:up .22s ease-out}
+@media(min-width:700px){.ov{align-items:center}.sheet{border-radius:22px}}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.sheet h3{margin:0 0 4px;font-size:18px}
+.sheet label{display:block;font-size:12px;color:var(--muted);margin:12px 0 5px;font-weight:600}
+.sheet .foot{display:flex;gap:8px;margin-top:16px}
+.sheet .foot .btn{flex:1}
+.grab{width:40px;height:4px;border-radius:9px;background:var(--line2);margin:-6px auto 12px}
+
+/* focus overlay */
+.focus{position:fixed;inset:0;z-index:60;background:radial-gradient(600px 400px at 50% 30%,rgba(249,115,22,.16),transparent 70%),#050811;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.focus.show{display:flex}
+.fring{width:min(78vw,320px);aspect-ratio:1;position:relative;margin:18px 0}
+.fring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.fring .tx{position:absolute;inset:0;display:grid;place-items:center;align-content:center}
+.fring .tx b{font-size:clamp(46px,13vw,68px);font-weight:800;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+.focus .what{max-width:520px;font-size:17px;font-weight:600;line-height:1.4}
+.focus .rule{color:var(--muted);font-size:13px;margin-top:6px}
+
+#toast{position:fixed;left:50%;top:14px;transform:translateX(-50%) translateY(-90px);z-index:80;background:var(--card2);border:1px solid var(--line2);color:var(--text);padding:10px 16px;border-radius:14px;font-weight:600;font-size:14px;transition:transform .25s;box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:92vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.cf{position:fixed;width:8px;height:12px;z-index:90;pointer-events:none;border-radius:2px;animation:cf 1.1s ease-out forwards}
+@keyframes cf{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+#boot{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:100}
+#boot .l{width:64px;height:64px;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(.9);opacity:.7}}
+.fade{animation:fade .25s ease-out}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+#boot .lock{max-width:360px;width:calc(100% - 40px);text-align:center;padding:24px}
+#boot .lock .l{width:64px;height:64px;margin:0 auto 8px;display:block}
+#boot .lock input{width:100%;box-sizing:border-box;margin:6px 0;padding:12px 14px;border-radius:12px;border:1px solid rgba(148,163,184,.3);background:rgba(15,23,42,.7);color:inherit;font:inherit;font-size:16px}
 </style>
 </head>
 <body>
-<!-- ▼▼ The only line to edit: your Apps Script web-app URL (Deploy → Manage deployments → Web app URL, ends in /exec) ▼▼ -->
-<script>const APP_URL = 'https://script.google.com/macros/s/AKfycbzVJrzO2Hx_eNfyhUT7XJrRcgIQqAKv8kc1TkkuQZG3FO0AW0cxzD4ZjNdDMNhMYJ0p/exec';</script>
 
-<iframe id="app" title="Sunil OS" allow="clipboard-write; autoplay"></iframe>
-<a id="pop" target="_blank" rel="noopener">Open full window ↗</a>
-<div id="help"><div class="box">
-  <h2 style="margin:0 0 6px">Sunil OS</h2>
-  <p>The app could not load inside this page. This usually means you are not signed in to Google in this browser, or the browser blocks Google sign-in inside other sites (Safari / iPhone).</p>
-  <a class="btn" id="open" target="_blank" rel="noopener">Open Sunil OS →</a>
-</div></div>
+<div id="boot"><div style="text-align:center"><svg class="l" viewBox="0 0 512 512" id="bootlogo"></svg><div class="muted small" style="margin-top:10px">Opening Sunil OS…</div></div></div>
+
+<header>
+  <div class="hbar">
+    <svg class="logo" viewBox="0 0 512 512" id="hlogo"></svg>
+    <div class="hello"><b id="hi">Sunil OS</b><span id="hdate"></span></div>
+    <div class="hright">
+      <span class="chip exam hidden" id="examchip"></span>
+      <span class="save" id="save"><i></i><span>Saved</span></span>
+      <button class="iconbtn" data-act="openSettings" title="Settings &amp; data">⚙️</button>
+    </div>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<nav><div class="nwrap" id="nav"></div></nav>
+
+<div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
+
+<div class="focus" id="focus">
+  <div class="tiny muted" style="letter-spacing:2px;font-weight:800">DEEP FOCUS</div>
+  <div class="what" id="fwhat"></div>
+  <div class="fring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(148,163,184,.15)" stroke-width="7"/>
+    <circle id="farc" cx="60" cy="60" r="54" fill="none" stroke="url(#fg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="0"/>
+    <defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs></svg>
+    <div class="tx"><b id="ftime">50:00</b><span class="muted small" id="fsub">ready</span></div></div>
+  <div class="seg" id="fpre" style="justify-content:center"></div>
+  <div class="row" style="justify-content:center;margin-top:6px">
+    <button class="btn" id="fgo" data-act="fToggle" style="min-width:140px">▶ Start</button>
+    <button class="btn ghost" data-act="fFinish">✓ Finish</button>
+    <button class="btn ghost" data-act="fClose">Close</button>
+  </div>
+  <div class="rule">Phone in another room. One task only. If the urge to scroll hits, breathe 5 times and continue.</div>
+</div>
+
+<div id="toast"></div>
 
 <script>
-  const f = document.getElementById('app'), help = document.getElementById('help');
-  document.getElementById('pop').href = document.getElementById('open').href = APP_URL;
-  if (!/^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL)) {
-    help.style.display = 'flex';
-    help.querySelector('p').textContent = 'Setup step left: paste your Apps Script /exec URL into APP_URL in index.html.';
-  } else {
-    let loaded = false;
-    f.onload = () => { loaded = true; setTimeout(() => { document.getElementById('pop').style.display = 'none'; }, 4000); };
-    f.src = APP_URL;
-    setTimeout(() => { if (!loaded) help.style.display = 'flex'; }, 12000);
+/* ═════════ Sunil OS v3 ═════════
+   Today = what I do now + my day · Plan = where I'm going · Progress = how I'm doing · Journal = how I feel & think
+   Rule: every piece of information lives in exactly one tab. */
+
+const LOGO = '<defs><linearGradient id="LB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16223b"/><stop offset="1" stop-color="#0b1120"/></linearGradient><linearGradient id="LG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><rect width="512" height="512" rx="116" fill="url(#LB)"/><circle cx="256" cy="256" r="188" fill="none" stroke="#23314f" stroke-width="20"/><circle cx="256" cy="256" r="188" fill="none" stroke="#f59e0b" stroke-width="20" stroke-linecap="round" stroke-dasharray="886 1181" transform="rotate(-90 256 256)"/><circle cx="68" cy="256" r="17" fill="#fde68a"/><path d="M297 157 A58 58 0 1 0 256 256 A58 58 0 1 1 215 355" fill="none" stroke="url(#LG)" stroke-width="46" stroke-linecap="round"/>';
+document.getElementById('hlogo').innerHTML = LOGO;
+document.getElementById('bootlogo').innerHTML = LOGO.replace(/\bLB\b/g, 'BB').replace(/\bLG\b/g, 'BG');
+
+/* ───────── state & helpers ───────── */
+let D = null, TAB = 'today', DATE = null, TASKF = 'upcoming', SAVING = 0, LOADED_AT = 0;
+try { TAB = localStorage.getItem('sos_tab') || 'today'; } catch (e) {}
+const SHEETS = ['Settings','Goals','GoalLog','Tasks','Courses','CPA','StudyLog','Thoughts','Ideas','Distraction','Plan','Chapters','Readiness','Mocks','Habits','HabitLog','DayLog','Milestones','Errors'];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => Number(v) || 0;
+const pad = n => String(n).padStart(2, '0');
+const dstr = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const today = () => dstr(new Date());
+const addDays = (s, n) => { const d = new Date(s + 'T00:00:00'); d.setDate(d.getDate() + n); return dstr(d); };
+const daysBetween = (a, b) => Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
+const fmtD = (s, o) => new Date(s + 'T00:00:00').toLocaleDateString('en-IN', o || {weekday: 'short', day: 'numeric', month: 'short'});
+const nowMin = () => { const n = new Date(); return n.getHours() * 60 + n.getMinutes(); };
+const hm = m => pad(Math.floor(m / 60) % 24) + ':' + pad(m % 60);
+const dur = m => m >= 60 ? Math.floor(m / 60) + 'h' + (m % 60 ? ' ' + (m % 60) + 'm' : '') : m + 'm';
+const uid = () => Math.random().toString(16).slice(2, 10);
+const S = () => { const o = {}; (D.Settings || []).forEach(r => o[r.Key] = r.Value); return o; };
+const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+const ymd = s => s.replace(/-/g, '');
+
+function toast(msg){ const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2300); }
+function confetti(x, y, n, big){
+  const C = ['#fbbf24','#f97316','#f472b6','#a78bfa','#34d399','#60a5fa'];
+  for (let i = 0; i < n; i++) { const p = document.createElement('i'); p.className = 'cf';
+    const a = Math.random() * 6.283, v = (big ? 260 : 110) * (.4 + Math.random());
+    p.style.left = x + 'px'; p.style.top = y + 'px'; p.style.background = C[i % C.length];
+    p.style.setProperty('--dx', (Math.cos(a) * v).toFixed(0) + 'px'); p.style.setProperty('--dy', (Math.sin(a) * v - (big ? 160 : 60)).toFixed(0) + 'px');
+    p.style.setProperty('--r', (Math.random() * 900 - 450).toFixed(0) + 'deg'); document.body.appendChild(p); setTimeout(() => p.remove(), 1200); }
+}
+
+/* ───────── server bridge (v4): private API + instant cache + offline-safe save queue ───────── */
+const API = 'https://script.google.com/macros/s/AKfycbzVJrzO2Hx_eNfyhUT7XJrRcgIQqAKv8kc1TkkuQZG3FO0AW0cxzD4ZjNdDMNhMYJ0p/exec';
+const LS = { get(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch (e) {} }, del(k){ try { localStorage.removeItem(k); } catch (e) {} } };
+let KEY = LS.get('sos_key') || '';
+function call(fn, args, key){
+  if (window.__MOCK_RUN) return Promise.resolve().then(() => window.__MOCK_RUN(fn, ...(args || [])));
+  return fetch(API, {method: 'POST', body: JSON.stringify({key: key == null ? KEY : key, fn, args: args || []}), redirect: 'follow'})
+    .then(r => r.json(), () => { const e = new Error('No internet connection'); e.net = true; throw e; })
+    .then(j => { if (!j.ok) { const e = new Error(j.error); e.server = true; if (j.error === 'AUTH' && key == null && KEY) lockOut(); throw e; } return j.data; });
+}
+function run(fn, ...args){ return call(fn, args); }
+
+let OPS = []; try { OPS = JSON.parse(LS.get('sos_q') || '[]'); } catch (e) {}
+let FLUSHING = false, RETRY = 0;
+const saveOps = () => LS.set('sos_q', JSON.stringify(OPS));
+let CT = null;
+function cacheSoon(){ clearTimeout(CT); CT = setTimeout(() => { if (D) LS.set('sos_cache', JSON.stringify(D)); }, 400); }
+function setSave(state){ const el = document.getElementById('save'); el.className = 'save ' + (state || ''); el.lastChild.textContent = state === 'busy' ? 'Saving…' : state === 'err' ? (navigator.onLine === false ? 'Offline · will sync' : 'Retrying…') : 'Saved'; }
+function queue(fn, ...args){ OPS.push({fn, args}); saveOps(); cacheSoon(); setSave('busy'); flush(); return Promise.resolve(); }
+function flush(){
+  if (FLUSHING || !OPS.length || !KEY) { if (!OPS.length) setSave(''); return; }
+  FLUSHING = true; setSave('busy');
+  const op = OPS[0];
+  call(op.fn, op.args).then(() => { OPS.shift(); saveOps(); RETRY = 0; FLUSHING = false; if (OPS.length) flush(); else { setSave(''); if (PENDING_LOAD) load(); } },
+    e => { FLUSHING = false;
+      if (e && e.server && e.message !== 'AUTH') { OPS.shift(); saveOps(); toast('⚠️ Could not save: ' + e.message); flush(); return; }
+      if (e && e.message === 'AUTH') return;
+      setSave('err'); RETRY = Math.min(RETRY + 1, 6); setTimeout(flush, 1000 * Math.pow(2, RETRY)); });
+}
+addEventListener('online', () => { RETRY = 0; flush(); });
+const busy = () => OPS.length > 0 || SAVING > 0;
+function put(sheet, obj, silent){
+  const arr = D[sheet] = D[sheet] || [];
+  const o = {}; Object.keys(obj).forEach(k => o[k] = obj[k] == null ? '' : String(obj[k]));
+  let row = o.ID && arr.find(r => r.ID === o.ID);
+  if (row) Object.assign(row, o); else { o.ID = o.ID || uid(); arr.push(o); }
+  queue('upsert', sheet, o);
+  if (sheet === 'Plan') calSoon();
+  if (!silent) render();
+  return o;
+}
+let CALT = null;
+function calSoon(){ if (S().CalendarSync !== 'on') return; clearTimeout(CALT); CALT = setTimeout(() => { if (OPS.length) return calSoon(); run('syncCalendar').catch(() => {}); }, 15000); }
+function drop(sheet, id){ D[sheet] = (D[sheet] || []).filter(r => r.ID !== id); queue('remove', sheet, id); if (sheet === 'Plan') calSoon(); render(); }
+function setting(k, v){ const r = D.Settings.find(x => x.Key === k); if (r) r.Value = String(v); else D.Settings.push({Key: k, Value: String(v)}); queue('setSetting', k, v); }
+
+function show(d){ SHEETS.forEach(n => d[n] = d[n] || []); D = d; DATE = DATE || today(); document.getElementById('boot').style.display = 'none'; render(); }
+let PENDING_LOAD = false;
+function load(){
+  if (busy()) { PENDING_LOAD = true; return Promise.resolve(); }   // never overwrite unsaved changes
+  PENDING_LOAD = false;
+  return run('getAll').then(d => {
+    if (!d || busy()) { if (d) PENDING_LOAD = true; return; }
+    LOADED_AT = Date.now(); LS.set('sos_cache', JSON.stringify(d));
+    if (!document.querySelector('.ov.show')) show(d); else D = Object.assign(D || {}, d);
+  }).catch(e => { if (e && e.message === 'AUTH') return;
+    if (D) { setSave('err'); return; }
+    bootMsg('Could not load: ' + esc(e.message || e), '<button class="btn" onclick="location.reload()">Retry</button>'); });
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && D && !busy() && Date.now() - LOADED_AT > 60000) load(); });
+
+/* ───────── passcode lock ───────── */
+function bootMsg(html, extra){ const b = document.getElementById('boot'); b.style.display = ''; b.innerHTML = '<div class="card lock"><svg class="l" viewBox="0 0 512 512">' + LOGO.replace(/\bLB\b/g, 'KB').replace(/\bLG\b/g, 'KG') + '</svg>' + html + (extra || '') + '</div>'; }
+function lockOut(){ KEY = ''; LS.del('sos_key'); D = null; lockScreen(); }
+function lockScreen(msg){
+  bootMsg('<div class="muted small">Checking…</div>');
+  call('status', [], '').then(st => {
+    const create = !st.ready;
+    if (create && !st.setupOpen) { bootMsg('<h3>Set up needed</h3><p class="small muted">Passcode setup is closed. In Apps Script, run <b>openPasscodeSetup</b>, then reload this page within 30 minutes.</p>', '<button class="btn" onclick="location.reload()">Reload</button>'); return; }
+    bootMsg('<h3>' + (create ? 'Create your passcode' : 'Welcome back, Sunil') + '</h3><p class="small muted">' + (create ? 'At least 8 characters. You will type it once per device. Keep it private.' : 'Enter your passcode to unlock this device.') + '</p>' +
+      '<form id="lockf"><input id="pc1" type="password" autocomplete="' + (create ? 'new-password' : 'current-password') + '" placeholder="Passcode" required minlength="' + (create ? 8 : 1) + '">' +
+      (create ? '<input id="pc2" type="password" autocomplete="new-password" placeholder="Repeat passcode" required>' : '') +
+      '<div id="lerr" class="small" style="color:#f87171;min-height:18px">' + esc(msg || '') + '</div><button class="btn" style="width:100%">' + (create ? 'Create & open' : 'Unlock') + '</button></form>');
+    document.getElementById('pc1').focus();
+    document.getElementById('lockf').onsubmit = e => { e.preventDefault();
+      const a = document.getElementById('pc1').value, er = document.getElementById('lerr'), btn = e.target.querySelector('button');
+      if (create && a !== document.getElementById('pc2').value) { er.textContent = 'The two passcodes do not match.'; return; }
+      btn.disabled = true; btn.textContent = 'Checking…';
+      call(create ? 'claim' : 'ping', [], a).then(() => { KEY = a; LS.set('sos_key', a); bootMsg('<div class="muted small">Loading your day…</div>'); flush(); load(); })
+        .catch(err => { btn.disabled = false; btn.textContent = create ? 'Create & open' : 'Unlock'; er.textContent = err.message === 'AUTH' ? 'Wrong passcode.' : err.message; });
+    };
+  }).catch(e => bootMsg('<p>Could not reach your data: ' + esc(e.message || e) + '</p>', '<button class="btn" onclick="location.reload()">Retry</button>'));
+}
+function lockDevice(){ if (OPS.length && !confirm('Some changes are still saving. Lock anyway?')) return; ['sos_key', 'sos_cache', 'sos_q'].forEach(LS.del); location.reload(); }
+
+function start(){
+  if (!KEY && !window.__MOCK_RUN) return lockScreen();
+  let c = null; try { c = JSON.parse(LS.get('sos_cache') || 'null'); } catch (e) {}
+  if (c && c.Settings) show(c);              // instant: last-known data, then refresh
+  if (OPS.length) { setSave('busy'); flush(); PENDING_LOAD = true; } else load();
+}
+setInterval(() => { if (D && !document.hidden) { if (DATE !== today() && DATE === addDays(today(), -1)) DATE = today(); if (TAB === 'today' && !document.querySelector('.ov.show')) render(); } }, 60000);
+
+/* ───────── plan block intelligence ───────── */
+function parseT(t){
+  const m = String(t).match(/(\d{1,2}):(\d{2})(?:\s*[-–]\s*(\d{1,2}):(\d{2}))?/);
+  if (!m) return {s: 0, e: null};
+  return {s: m[1] * 60 + +m[2], e: m[3] != null ? m[3] * 60 + +m[4] : null};
+}
+function kind(b){
+  const s = String(b).toLowerCase();
+  if (/deadline/.test(s)) return ['deadline', 'DEADLINE'];
+  if (/far exam|aud exam|reg exam|tcp exam|prometric/.test(s)) return ['exam', 'EXAM'];
+  if (/mock|exam slot|sim set/.test(s)) return ['mock', 'MOCK'];
+  if (/review|error log|classify/.test(s)) return ['review', 'REVIEW'];
+  if (/sleep|lunch|wake|leave home|pack|breakfast|family|rest|walk|errand|taper|sanskar/.test(s)) return ['life', 'LIFE'];
+  if (/read|cheat|flashcard|recall|blurt|revision|traps|write it out/.test(s)) return ['read', 'RECALL'];
+  if (/mcq|sim|library|practice|chapter|cpa|study/.test(s)) return ['practice', 'PRACTICE'];
+  return ['life', 'BLOCK'];
+}
+const isStudy = b => { const k = kind(b)[0]; return k !== 'life'; };
+function blocks(date){
+  const arr = D.Plan.filter(p => p.Date === date).map(p => ({...p, ...parseT(p.Time)})).sort((a, b) => a.s - b.s);
+  arr.forEach((b, i) => { b.end = b.e != null ? b.e : (arr[i + 1] && arr[i + 1].s > b.s ? Math.min(arr[i + 1].s, b.s + 60) : b.s + 30); b.min = b.e != null ? b.e - b.s : 0; });
+  return arr;
+}
+function bstatus(b, date){
+  if (b.Done === 'Yes') return 'done';
+  if (b.Done === 'Skip') return 'skip';
+  const t = today();
+  if (date < t) return 'missed';
+  if (date > t) return 'up';
+  const n = nowMin();
+  if (n >= b.s && n < b.end) return 'now';
+  return n >= b.end ? 'missed' : 'up';
+}
+function studyMin(date){
+  return blocks(date).filter(b => b.Done === 'Yes' && isStudy(b.Block)).reduce((a, b) => a + b.min, 0) +
+    D.StudyLog.filter(r => r.Date === date).reduce((a, r) => a + num(r.Minutes), 0);
+}
+function adherence(date){ const bs = blocks(date); if (!bs.length) return null; return bs.filter(b => b.Done === 'Yes').length / bs.length; }
+function goodDay(d){ const a = adherence(d); return (a != null && a >= .5) || studyMin(d) >= 60; }
+function streak(){ const t = today(); let s = 0; for (let i = goodDay(t) ? 0 : 1; i < 400; i++) { if (goodDay(addDays(t, -i))) s++; else break; } return s; }
+function xp(){
+  const v = D.Plan.filter(p => p.Done === 'Yes').length * 10 + D.StudyLog.reduce((a, r) => a + num(r.Minutes), 0) +
+    D.Plan.filter(p => p.Done === 'Yes' && isStudy(p.Block)).reduce((a, p) => { const t = parseT(p.Time); return a + (t.e != null ? t.e - t.s : 0); }, 0) +
+    D.HabitLog.length * 5 + D.DayLog.length * 15;
+  const lv = Math.floor(Math.sqrt(v / 60)) + 1, cur = 60 * (lv - 1) ** 2, nxt = 60 * lv * lv;
+  return {v, lv, toNext: nxt - v, pct: Math.round((v - cur) / (nxt - cur) * 100)};
+}
+const LEVELS = ['Rookie','Learner','Grinder','Analyst','Senior Analyst','Controller','Finance Manager','Director','VP Finance','CFO','CFO · USA'];
+const lvName = lv => LEVELS[Math.min(lv - 1, LEVELS.length - 1)];
+
+/* ───────── exam + readiness ───────── */
+function nextExam(){ return [...D.CPA].sort((a, b) => num(a.Order) - num(b.Order)).find(c => c.Status !== 'Passed'); }
+function phaseOf(dl){ return dl == null ? 0 : dl > 28 ? 1 : dl > 14 ? 2 : dl >= 0 ? 3 : 0; }
+const PHASES = ['', 'Fix weak chapters', 'Mixed review', 'Exam simulation'];
+const PHASE_TIP = ['', 'Redo flagged MCQs and SIMs in your weakest chapters. Accuracy over volume.',
+  'Mix all chapters. 1 mini mock every 3rd day. Rewrite every mistake as a one-line rule.',
+  'Full mocks at exam time (12:30). Review every wrong answer. No new topics in the last 3 days.'];
+function readiness(sec){
+  sec = sec || 'FAR';
+  const s = S(), tM = num(s.TargetMCQAcc) || 75, tS = num(s.TargetSIMAcc) || 70;
+  const ch = D.Chapters.filter(c => c.Section === sec).sort((a, b) => a.Code.localeCompare(b.Code, undefined, {numeric: true}));
+  if (!ch.length) return null;
+  const sum = (arr, f) => arr.reduce((a, c) => a + num(c[f]), 0);
+  const core = ch.filter(c => !/review/i.test(c.Name));
+  const cm = sum(core, 'MCQTotal') || 1, cs = sum(core, 'SIMTotal') || 1;
+  const mAtt = sum(ch, 'MCQAttempted'), mAcc = mAtt ? sum(ch, 'MCQCorrect') / mAtt * 100 : 0;
+  const sAtt = sum(ch, 'SIMAttempted'), sAcc = sAtt ? ch.reduce((a, c) => a + num(c.SIMAcc) * num(c.SIMAttempted), 0) / sAtt : 0;
+  const coreAtt = sum(core, 'MCQAttempted'), coreAcc = coreAtt ? sum(core, 'MCQCorrect') / coreAtt * 100 : 0;
+  const rows = ch.map(c => {
+    const ma = num(c.MCQAttempted) ? num(c.MCQCorrect) / num(c.MCQAttempted) * 100 : null, sa = num(c.SIMAttempted) ? num(c.SIMAcc) : null;
+    const review = /review/i.test(c.Name);
+    const gain = review ? 0 : .5 * Math.max(0, tM - (ma ?? tM)) * num(c.MCQTotal) / cm + .5 * Math.max(0, tS - (sa ?? tS)) * num(c.SIMTotal) / cs;
+    return {...c, ma, sa, review, gain};
+  });
+  const mocks = D.Mocks.filter(m => m.Section === sec).sort((a, b) => b.Date.localeCompare(a.Date));
+  const good = mocks.filter(m => m.Type === 'Mocktest' || m.Type === 'Practice Exam').slice(0, 2).filter(m => num(m.Score) >= tM).length;
+  return {sec, tM, tS, rows, queue: rows.filter(r => !r.review && r.gain > .3).sort((a, b) => b.gain - a.gain),
+    mAcc, sAcc, coreAcc, score: (mAcc + sAcc) / 2, target: (tM + tS) / 2, flagged: sum(ch, 'MCQFlagged'), mocks, good,
+    hist: D.Readiness.filter(r => r.Section === sec).sort((a, b) => a.Date.localeCompare(b.Date)), review: rows.find(r => r.review),
+    ready: mAcc >= tM && sAcc >= tS && good >= 2};
+}
+
+/* ───────── render ───────── */
+const ICONS = {
+  today: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  plan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19l5-14 6 9 5-6"/><circle cx="20" cy="8" r="1.5"/></svg>',
+  progress: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  journal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M9 9h6M9 13h4"/></svg>',
+  focus: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/></svg>'
+};
+function render(){
+  if (!D) return;
+  const s = S(), h = new Date().getHours();
+  document.getElementById('hi').textContent = (h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening') + ', ' + (s.Name || 'Sunil');
+  document.getElementById('hdate').textContent = new Date().toLocaleDateString('en-IN', {weekday: 'long', day: 'numeric', month: 'long'});
+  const nx = nextExam(), ec = document.getElementById('examchip');
+  if (nx && nx.TargetDate) { const dl = daysBetween(today(), nx.TargetDate); ec.classList.toggle('hidden', dl < 0); ec.innerHTML = '🎯 <b>' + dl + '</b> days · ' + esc(nx.Section); }
+  else ec.classList.add('hidden');
+  const nav = [['today','Today'],['plan','Plan'],['focus',''],['progress','Progress'],['journal','Journal']];
+  document.getElementById('nav').innerHTML = nav.map(([k, l]) => k === 'focus'
+    ? '<div><button class="fab" data-act="openFocus" title="Start a focus block">' + ICONS.focus + '</button></div>'
+    : '<button class="nb ' + (TAB === k ? 'on' : '') + '" data-act="tab" data-t="' + k + '">' + ICONS[k] + l + '</button>').join('');
+  const html = ({today: vToday, plan: vPlan, progress: vProgress, journal: vJournal})[TAB]();
+  const m = document.getElementById('main');
+  const y = window.scrollY; m.innerHTML = '<div class="' + (render._tab !== TAB ? 'fade' : '') + '">' + html + '</div>'; window.scrollTo(0, render._tab !== TAB ? 0 : y);
+  render._tab = TAB;
+}
+
+/* ═════════ TODAY: what I'm doing now + my day ═════════ */
+function vToday(){
+  const t = today(), viewing = DATE || t, isT = viewing === t;
+  return '<div class="cols"><div class="stack">' + (isT ? nowCard() : '<div class="card row between"><div><div class="sec" style="margin:0">Viewing</div><b>' + fmtD(viewing, {weekday: 'long', day: 'numeric', month: 'long'}) + '</b></div><button class="btn sm" data-act="day" data-d="' + t + '">Back to today</button></div>') +
+    (isT ? tilesCard() : '') + timelineCard(viewing) + '</div><div class="stack">' + habitsCard(viewing) + tasksToday(viewing) + (isT ? closeDayCard() : '') + '</div></div>';
+}
+function nowCard(){
+  const t = today(), bs = blocks(t), n = nowMin();
+  const cur = bs.find(b => bstatus(b, t) === 'now');
+  const next = bs.find(b => bstatus(b, t) === 'up');
+  const missed = bs.filter(b => bstatus(b, t) === 'missed');
+  const done = bs.filter(b => b.Done === 'Yes').length;
+  const k = b => kind(b.Block), tm = b => b.e != null ? hm(b.s) + '–' + hm(b.e) : hm(b.s);
+  if (!bs.length) return '<div class="card now"><div class="lbl">📝 NO PLAN FOR TODAY</div><h3>A day without a plan gets eaten by Instagram.</h3><div class="meta">Add your blocks, or load a template and adjust it.</div>' +
+    '<div class="acts"><button class="btn" data-act="addBlock">+ Add block</button><button class="btn ghost" data-act="tpl" data-k="work">Workday template</button><button class="btn ghost" data-act="tpl" data-k="off">Day-off template</button></div></div>';
+  if (cur) {
+    const p = Math.min(100, Math.round((n - cur.s) / Math.max(1, cur.end - cur.s) * 100)), left = cur.end - n;
+    return '<div class="card now"><div class="lbl"><span class="dot"></span>RIGHT NOW · ' + tm(cur) + '<span class="k k-' + k(cur)[0] + '">' + k(cur)[1] + '</span></div>' +
+      '<h3>' + esc(cur.Block) + '</h3><div class="meta">' + dur(left) + ' left in this block' + (next ? ' · next at ' + hm(next.s) : '') + '</div>' +
+      '<div class="bar"><i style="width:' + p + '%"></i></div>' +
+      '<div class="acts"><button class="btn" data-act="openFocus" data-id="' + cur.ID + '">▶ Focus</button><button class="btn good" data-act="done" data-id="' + cur.ID + '">✓ Done</button><button class="btn ghost" data-act="skip" data-id="' + cur.ID + '">Skip</button></div>' +
+      (['review', 'mock', 'practice'].includes(k(cur)[0]) ? '<button class="link" style="margin-top:12px" data-act="logError">🧯 Log a mistake from this block →</button>' : '') + '</div>';
   }
+  if (next) {
+    const inM = next.s - n;
+    return '<div class="card now"><div class="lbl">⏭ UP NEXT · in ' + dur(inM) + '<span class="k k-' + k(next)[0] + '">' + k(next)[1] + '</span></div>' +
+      '<h3>' + esc(next.Block) + '</h3><div class="meta">' + tm(next) + (missed.length ? ' · <span class="bad">' + missed.length + ' earlier block' + (missed.length > 1 ? 's' : '') + ' not ticked ↓</span>' : ' · ' + done + '/' + bs.length + ' done today') + '</div>' +
+      '<div class="acts"><button class="btn" data-act="openFocus" data-id="' + next.ID + '">▶ Start it early</button><button class="btn ghost" data-act="openFocus">Free focus block</button></div></div>';
+  }
+  const all = done === bs.length;
+  return '<div class="card now"><div class="lbl">' + (all ? '🏆 DAY CRUSHED' : '🌙 DAY FINISHED') + '</div><h3>' + (all ? 'Every block done. This is how a CPA gets built.' : done + ' of ' + bs.length + ' blocks done today.') + '</h3>' +
+    '<div class="meta">' + (all ? 'Close the day in the journal and sleep on time.' : 'Tick anything you did below. Move the rest to tomorrow; don\'t just delete it.') + '</div>' +
+    '<div class="acts"><button class="btn" data-act="checkin">🌙 Close the day</button><button class="btn ghost" data-act="day" data-d="' + addDays(t, 1) + '">See tomorrow →</button></div></div>';
+}
+function tilesCard(){
+  const t = today(), bs = blocks(t), done = bs.filter(b => b.Done === 'Yes').length, sm = studyMin(t), s = S();
+  const target = num(s.DailyStudyTargetMin) || 120, lim = num(s.SocialLimitMin) || 30;
+  const dx = D.Distraction.find(r => r.Date === t) || {}, soc = num(dx.Instagram) + num(dx.YouTube);
+  const pct = (a, b) => Math.min(100, Math.round(a / Math.max(1, b) * 100));
+  return '<div class="tiles">' +
+    '<div class="tile"><b>' + done + '<span class="dim" style="font-size:14px">/' + bs.length + '</span></b><small>blocks done</small><div class="bar mini"><i style="width:' + pct(done, bs.length) + '%"></i></div></div>' +
+    '<div class="tile"><b>' + dur(sm) + '</b><small>studied · goal ' + dur(target) + '</small><div class="bar mini"><i style="width:' + pct(sm, target) + '%;' + (sm >= target ? 'background:var(--good)' : '') + '"></i></div></div>' +
+    '<button class="tile" data-act="social"><b class="' + (soc > lim ? 'bad' : '') + '">' + soc + 'm</b><small>social · limit ' + lim + 'm</small><div class="bar mini"><i style="width:' + pct(soc, lim) + '%;background:' + (soc > lim ? 'var(--bad)' : 'var(--good)') + '"></i></div></button>' +
+  '</div>';
+}
+function timelineCard(date){
+  const bs = blocks(date), done = bs.filter(b => b.Done === 'Yes').length;
+  const row = b => {
+    const st = bstatus(b, date), k = kind(b.Block);
+    const tm = b.e != null ? '<b>' + hm(b.s) + '</b>' + hm(b.e) : '<b>' + hm(b.s) + '</b>';
+    const extra = st === 'missed' ? '<span class="pill bad">not ticked</span><button class="link" data-act="done" data-id="' + b.ID + '">I did it</button><button class="link" data-act="move" data-id="' + b.ID + '">→ tomorrow</button>'
+      : st === 'now' ? '<span class="pill amber">● now</span>' : st === 'skip' ? '<span class="pill">skipped</span>' : '';
+    const logE = ['review', 'mock'].includes(k[0]) && date <= today() ? '<button class="link tiny" data-act="logError">🧯 log errors</button>' : '';
+    return '<div class="tli ' + st + '"><div class="tm">' + tm + '</div><button class="ck" data-act="toggle" data-id="' + b.ID + '" aria-label="Mark done">' + (st === 'done' ? '✓' : st === 'skip' ? '–' : '') + '</button>' +
+      '<div class="bd"><div class="bt" data-act="editBlock" data-id="' + b.ID + '">' + esc(b.Block) + '</div><div class="tags"><span class="k k-' + k[0] + '">' + k[1] + '</span>' + (b.min && isStudy(b.Block) ? '<span class="tiny dim">' + dur(b.min) + '</span>' : '') + extra + logE + '</div></div></div>';
+  };
+  return '<div class="card"><h2><span class="t">🗓️ ' + (date === today() ? 'My day' : 'Plan') + (bs.length ? ' <span class="pill ' + (done === bs.length ? 'good' : '') + '">' + done + '/' + bs.length + '</span>' : '') + '</span>' +
+    '<span class="dnav"><button data-act="day" data-d="' + addDays(date, -1) + '">‹</button><input type="date" value="' + date + '" data-chg="pickDay" style="width:auto;padding:5px 8px;font-size:12.5px"><button data-act="day" data-d="' + addDays(date, 1) + '">›</button></span></h2>' +
+    (bs.length ? '<div class="tl">' + bs.map(row).join('') + '</div>' : '<div class="empty">Nothing planned for this day.</div>') +
+    '<div class="row" style="margin-top:12px"><button class="btn ghost sm" data-act="addBlock">+ Add block</button>' + (!bs.length ? '<button class="btn ghost sm" data-act="tpl" data-k="work">Workday template</button><button class="btn ghost sm" data-act="tpl" data-k="off">Day-off template</button>' : '') +
+    (bs.some(b => bstatus(b, date) === 'missed') ? '<button class="btn ghost sm" data-act="moveAll" data-d="' + date + '">Move unticked → tomorrow</button>' : '') + '</div></div>';
+}
+function habitsCard(date){
+  const hs = D.Habits.filter(h => h.Active !== 'No').sort((a, b) => num(a.Order) - num(b.Order));
+  if (!hs.length) return '';
+  const on = id => D.HabitLog.some(l => l.Date === date && l.HabitID === id);
+  const n = hs.filter(h => on(h.ID)).length;
+  return '<div class="card"><h2><span class="t">🌱 Daily habits <span class="pill ' + (n === hs.length ? 'good' : '') + '">' + n + '/' + hs.length + '</span></span><button class="link" data-act="openSettings" data-s="habits">Edit</button></h2>' +
+    '<div class="habits">' + hs.map(h => '<button class="hb ' + (on(h.ID) ? 'on' : '') + '" data-act="habit" data-id="' + h.ID + '"><span class="i">' + esc(h.Icon || '•') + '</span>' + esc(h.Name) + '</button>').join('') + '</div></div>';
+}
+function taskRow(x){
+  const t = today(), od = x.Status !== 'Done' && x.DueDate && x.DueDate < t;
+  return '<div class="task ' + (x.Status === 'Done' ? 'done' : '') + '"><button class="ck" data-act="task" data-id="' + x.ID + '">' + (x.Status === 'Done' ? '✓' : '') + '</button><div class="grow"><div class="tt" data-act="editTask" data-id="' + x.ID + '">' + esc(x.Title) + '</div>' +
+    '<div class="tags" style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">' + (x.Priority === 'High' ? '<span class="pill bad">High</span>' : '') + (x.Category ? '<span class="pill">' + esc(x.Category) + '</span>' : '') +
+    (x.DueDate ? '<span class="pill ' + (od ? 'bad' : x.DueDate === t ? 'amber' : '') + '">' + (od ? 'overdue · ' : '') + fmtD(x.DueDate) + '</span>' : '') + '</div></div></div>';
+}
+function tasksToday(date){
+  const t = today(), isT = date === t;
+  const list = D.Tasks.filter(x => x.Status !== 'Done' && x.DueDate && (isT ? x.DueDate <= t : x.DueDate === date)).sort((a, b) => a.DueDate.localeCompare(b.DueDate));
+  const doneToday = isT ? D.Tasks.filter(x => x.Status === 'Done' && String(x.Completed).slice(0, 10) === t) : [];
+  return '<div class="card"><h2><span class="t">✅ ' + (isT ? 'Due today' : 'Due ' + fmtD(date)) + (list.length ? ' <span class="pill ' + (list.some(x => x.DueDate < t) ? 'bad' : 'amber') + '">' + list.length + '</span>' : '') + '</span><button class="link" data-act="tab" data-t="plan" data-scroll="tasks">All tasks</button></h2>' +
+    (list.length || doneToday.length ? list.map(taskRow).join('') + doneToday.map(taskRow).join('') : '<div class="empty">Nothing due. 🎉</div>') +
+    '<form class="qadd" data-sub="quickTask" data-d="' + date + '"><input name="t" placeholder="Add a task for ' + (isT ? 'today' : fmtD(date)) + '…" autocomplete="off"><button class="btn sm">Add</button></form></div>';
+}
+function closeDayCard(){
+  const t = today(), dl = D.DayLog.find(r => r.Date === t);
+  if (dl) return '<div class="card"><h2><span class="t">🌙 Day closed</span><button class="link" data-act="checkin">Edit</button></h2><div class="row"><span style="font-size:26px">' + (MOODS[num(dl.Mood) - 1] || '🙂') + '</span><div class="grow small">' + (dl.Win ? '<b>Win:</b> ' + esc(dl.Win) : '') + (dl.Lesson ? '<br><b>Lesson:</b> ' + esc(dl.Lesson) : '') + '</div></div></div>';
+  if (new Date().getHours() < 18) return '';
+  return '<div class="card"><h2><span class="t">🌙 Close the day</span></h2><p class="muted small" style="margin:0 0 10px">60 seconds: mood, one win, one lesson. This is what turns days into progress.</p><button class="btn" data-act="checkin" style="width:100%">Close the day</button></div>';
+}
+
+/* ═════════ PLAN: where I'm going ═════════ */
+function vPlan(){
+  return '<div class="cols"><div class="stack">' + campaignCard() + weekCard() + tasksCard() + '</div><div class="stack">' + journeyCard() + lifeCard() + goalsCard() + coursesCard() + '</div></div>';
+}
+function campaignCard(){
+  const nx = nextExam(); if (!nx) return '<div class="card"><h2>🎉 All four sections passed</h2></div>';
+  const t = today(), dl = nx.TargetDate ? daysBetween(t, nx.TargetDate) : null, ph = phaseOf(dl);
+  if (dl == null) return '<div class="card now"><div class="lbl">🎯 ' + esc(nx.Section) + ' CAMPAIGN</div><h3>No exam date yet</h3><div class="meta">A plan without a date is a wish. Book it, then set the date here.</div><div class="acts"><button class="btn" data-act="editSection" data-id="' + nx.ID + '">Set exam date</button></div></div>';
+  const upcoming = D.Tasks.filter(x => x.Status !== 'Done' && x.DueDate && x.DueDate >= t && x.DueDate <= nx.TargetDate && x.Category === 'CPA').sort((a, b) => a.DueDate.localeCompare(b.DueDate)).slice(0, 6);
+  return '<div class="card now"><div class="lbl">🎯 ' + esc(nx.Section) + ' CAMPAIGN · ' + fmtD(nx.TargetDate, {weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'}) + '</div>' +
+    '<div class="row" style="align-items:flex-end;gap:14px;margin-top:8px"><div class="big">' + dl + '</div><div class="muted" style="padding-bottom:4px">days to go<br><b style="color:var(--text)">Phase ' + ph + ': ' + PHASES[ph] + '</b></div></div>' +
+    '<div class="phase"><div class="' + (ph > 1 ? 'past' : ph === 1 ? 'on' : '') + '"></div><div class="' + (ph > 2 ? 'past' : ph === 2 ? 'on' : '') + '"></div><div class="' + (ph === 3 ? 'on' : '') + '"></div></div>' +
+    '<div class="phlbl"><span class="' + (ph === 1 ? 'on' : '') + '">Fix weak chapters</span><span class="' + (ph === 2 ? 'on' : '') + '">Mixed review · −28d</span><span class="' + (ph === 3 ? 'on' : '') + '">Mocks · −14d</span></div>' +
+    '<p class="small" style="margin:12px 0 4px">' + PHASE_TIP[ph] + '</p>' +
+    (nx.Notes ? '<p class="small muted" style="margin:0">📌 ' + esc(nx.Notes) + '</p>' : '') +
+    (upcoming.length ? '<div class="sec" style="margin-top:14px">Key checkpoints</div>' + upcoming.map(x => '<div class="ms" style="grid-template-columns:72px 1fr auto"><span class="small ' + (x.DueDate === t ? 'amber' : 'muted') + '">' + fmtD(x.DueDate) + '</span><span class="small">' + esc(x.Title) + '</span><span class="tiny dim">' + (daysBetween(t, x.DueDate) || 'today') + (daysBetween(t, x.DueDate) ? 'd' : '') + '</span></div>').join('') : '') + '</div>';
+}
+function weekCard(){
+  const t = today();
+  const days = [...Array(7)].map((_, i) => addDays(t, i));
+  return '<div class="card"><h2><span class="t">📆 Next 7 days</span><span class="tiny dim">tap a day to open it</span></h2><div class="week">' + days.map(d => {
+    const bs = blocks(d), sm = bs.filter(b => isStudy(b.Block)).reduce((a, b) => a + b.min, 0);
+    const ic = bs.some(b => kind(b.Block)[0] === 'exam') ? '🎯' : bs.some(b => kind(b.Block)[0] === 'mock') ? '📝' : bs.some(b => kind(b.Block)[0] === 'deadline') ? '🔥' : '';
+    return '<button class="wd ' + (d === t ? 'today' : '') + '" data-act="openDay" data-d="' + d + '"><span class="muted">' + fmtD(d, {weekday: 'short'}) + '</span><b>' + new Date(d + 'T00:00:00').getDate() + '</b><div class="ic">' + ic + '</div><span class="dim">' + (sm ? (sm / 60).toFixed(sm % 60 ? 1 : 0) + 'h' : bs.length ? bs.length + ' blk' : '—') + '</span></button>';
+  }).join('') + '</div></div>';
+}
+function tasksCard(){
+  const t = today(), f = TASKF;
+  const list = D.Tasks.filter(x => f === 'done' ? x.Status === 'Done' : x.Status !== 'Done' && (f === 'upcoming' ? x.DueDate && x.DueDate > t : f === 'nodate' ? !x.DueDate : x.DueDate && x.DueDate <= t))
+    .sort((a, b) => f === 'done' ? String(b.Completed).localeCompare(String(a.Completed)) : (a.DueDate || '').localeCompare(b.DueDate || '') || (a.Priority === 'High' ? -1 : 1)).slice(0, f === 'done' ? 15 : 60);
+  const c = k => D.Tasks.filter(x => x.Status !== 'Done' && (k === 'upcoming' ? x.DueDate && x.DueDate > t : k === 'nodate' ? !x.DueDate : x.DueDate && x.DueDate <= t)).length;
+  return '<div class="card" id="tasks"><h2><span class="t">🗂️ Tasks</span><button class="btn sm" data-act="addTask">+ Task</button></h2>' +
+    '<div class="seg">' + [['now', 'Today & overdue'], ['upcoming', 'Upcoming'], ['nodate', 'Someday'], ['done', 'Done']].map(([k, l]) => '<button class="' + (f === k ? 'on' : '') + '" data-act="taskf" data-f="' + k + '">' + l + (k !== 'done' ? ' · ' + c(k) : '') + '</button>').join('') + '</div>' +
+    (list.length ? list.map(taskRow).join('') : '<div class="empty">Nothing here.</div>') + '</div>';
+}
+function journeyCard(){
+  const s = S(), cpa = [...D.CPA].sort((a, b) => num(a.Order) - num(b.Order)), nx = nextExam();
+  return '<div class="card"><h2><span class="t">🧭 The journey</span></h2>' +
+    (s.WhyCPA ? '<p style="margin:0 0 14px;font-size:14.5px;line-height:1.5">“' + esc(s.WhyCPA) + '”</p>' : '') +
+    '<div class="road">' + cpa.map(c => '<button class="step ' + (c.Status === 'Passed' ? 'ok' : nx && c.ID === nx.ID ? 'cur' : '') + '" data-act="editSection" data-id="' + c.ID + '"><div class="c">' + (c.Status === 'Passed' ? '✓' : esc(c.Section)) + '</div><b>' + esc(c.Section) + '</b><small>' + (c.Status === 'Passed' ? 'Passed' + (c.Score ? ' · ' + esc(c.Score) : '') : c.TargetDate ? fmtD(c.TargetDate, {day: 'numeric', month: 'short'}) : c.Status === 'Not Started' ? 'next' : esc(c.Status)) + '</small></button>').join('') +
+    '<div class="step"><div class="c">🇺🇸</div><b>Licence</b><small>then USA</small></div></div>' +
+    '<p class="tiny dim" style="margin:10px 0 0">Started ' + (s.CPAStartDate ? fmtD(s.CPAStartDate, {month: 'short', year: 'numeric'}) : '') + '. Tap a section to update its status, date or score.</p></div>';
+}
+function lifeCard(){
+  const t = today();
+  const items = D.Milestones.map(m => ({...m, kind: 'm'}))
+    .concat(D.CPA.filter(c => c.TargetDate && c.Status !== 'Passed').map(c => ({ID: c.ID, Date: c.TargetDate, Title: c.Section + ' exam', Icon: '🎯', kind: 'cpa'})))
+    .filter(m => m.Date >= t).sort((a, b) => a.Date.localeCompare(b.Date));
+  return '<div class="card"><h2><span class="t">⏳ Life milestones</span><button class="link" data-act="addMilestone">+ Add</button></h2>' +
+    (items.length ? items.map(m => { const d = daysBetween(t, m.Date);
+      return '<div class="ms"><div class="e">' + esc(m.Icon || '📍') + '</div><div><b class="small" style="font-size:14px">' + esc(m.Title) + '</b><div class="tiny muted">' + fmtD(m.Date, {day: 'numeric', month: 'short', year: 'numeric'}) + (m.Note ? ' · ' + esc(m.Note) : '') + '</div></div>' +
+        '<div style="text-align:right"><b>' + (d > 60 ? Math.round(d / 7) + 'w' : d + 'd') + '</b>' + (m.kind === 'm' ? '<br><button class="link tiny" data-act="editMilestone" data-id="' + m.ID + '">edit</button>' : '') + '</div></div>'; }).join('')
+      : '<div class="empty">Add the dates that matter.</div>') + '</div>';
+}
+function goalsCard(){
+  const gs = D.Goals.filter(g => g.Status === 'Active');
+  return '<div class="card"><h2><span class="t">🏁 Goals</span><button class="link" data-act="addGoal">+ Goal</button></h2>' + (gs.length ? gs.map(g => {
+    const left = g.TargetDate ? daysBetween(today(), g.TargetDate) : null;
+    return '<div class="goal"><div class="row between"><b style="font-size:14px" data-act="editGoal" data-id="' + g.ID + '">' + esc(g.Title) + '</b><span class="pill ' + (left != null && left < 0 ? 'bad' : '') + '">' + (left == null ? '' : left < 0 ? Math.abs(left) + 'd late' : left + 'd') + '</span></div>' +
+      (g.Why ? '<div class="tiny muted" style="margin:3px 0 6px">' + esc(g.Why) + '</div>' : '') +
+      '<div class="row"><input type="range" min="0" max="100" step="5" value="' + num(g.Progress) + '" data-chg="goalProg" data-id="' + g.ID + '" class="grow"><b class="small" style="width:38px;text-align:right">' + num(g.Progress) + '%</b></div></div>'; }).join('')
+    : '<div class="empty">No active goals.</div>') + '</div>';
+}
+function coursesCard(){
+  const cs = D.Courses.filter(c => c.Status !== 'Completed');
+  if (!cs.length) return '';
+  return '<div class="card"><h2><span class="t">📘 Courses</span><button class="link" data-act="addCourse">+ Add</button></h2>' + cs.map(c => {
+    const p = num(c.TotalUnits) ? Math.round(num(c.DoneUnits) / num(c.TotalUnits) * 100) : 0;
+    return '<div class="goal"><div class="row between"><b style="font-size:14px" data-act="editCourse" data-id="' + c.ID + '">' + esc(c.Name) + '</b><button class="btn ghost sm" data-act="courseUp" data-id="' + c.ID + '">+1 module</button></div><div class="row" style="margin-top:6px"><div class="bar grow"><i style="width:' + p + '%"></i></div><span class="tiny muted">' + num(c.DoneUnits) + '/' + num(c.TotalUnits) + '</span></div></div>'; }).join('') + '</div>';
+}
+
+/* ═════════ PROGRESS: how I'm doing ═════════ */
+function vProgress(){
+  return '<div class="stack">' + scoreCard() + '<div class="grid2">' + consistencyCard() + readinessCard() + '</div><div class="grid2">' + mocksCard() + errorCard() + '</div><div class="grid2">' + queueCard() + habitStats() + '</div><div class="grid2">' + socialCard() + cfoCard() + '</div></div>';
+}
+function scoreCard(){
+  const g = xp(), st = streak(), t = today(), s = S();
+  const wk = [...Array(7)].map((_, i) => addDays(t, -i));
+  const planned = wk.reduce((a, d) => a + blocks(d).length, 0), done = wk.reduce((a, d) => a + blocks(d).filter(b => b.Done === 'Yes').length, 0);
+  const sm = wk.reduce((a, d) => a + studyMin(d), 0), tgt = (num(s.DailyStudyTargetMin) || 120) * 7;
+  return '<div class="card"><div class="row between" style="margin-bottom:12px"><div><div class="sec" style="margin:0">Level ' + g.lv + '</div><b style="font-size:20px">' + lvName(g.lv) + '</b></div><div style="text-align:right"><b class="amber" style="font-size:20px">' + g.v.toLocaleString('en-IN') + ' XP</b><div class="tiny muted">' + g.toNext + ' XP to ' + lvName(g.lv + 1) + '</div></div></div>' +
+    '<div class="bar" style="height:10px;margin-bottom:16px"><i style="width:' + g.pct + '%"></i></div>' +
+    '<div class="score">' +
+      '<div class="tile"><b>🔥 ' + st + '</b><small>day streak</small></div>' +
+      '<div class="tile"><b class="' + (planned && done / planned < .5 ? 'bad' : '') + '">' + (planned ? Math.round(done / planned * 100) : 0) + '%</b><small>plan done · 7 days</small></div>' +
+      '<div class="tile"><b>' + (sm / 60).toFixed(1) + 'h</b><small>studied · goal ' + (tgt / 60).toFixed(0) + 'h</small></div>' +
+      '<div class="tile"><b>' + done + '</b><small>blocks ticked · 7 days</small></div>' +
+    '</div><p class="tiny dim" style="margin:10px 0 0">XP: +10 per block ticked, +1 per study minute, +5 per habit, +15 per closed day. A streak day = at least half your blocks done, or 60+ study minutes.</p></div>';
+}
+function consistencyCard(){
+  const t = today(), start = addDays(t, -34);
+  const off = (new Date(start + 'T00:00:00').getDay() + 6) % 7;
+  const cells = [...Array(off)].map(() => '<div style="background:none"></div>');
+  for (let i = 0; i < 35; i++) { const d = addDays(start, i), a = adherence(d), sm = studyMin(d);
+    const l = a == null && !sm ? 0 : Math.max(a == null ? 0 : a >= .9 ? 4 : a >= .6 ? 3 : a >= .3 ? 2 : a > 0 ? 1 : 0, sm >= 120 ? 4 : sm >= 60 ? 3 : sm > 0 ? 1 : 0);
+    cells.push('<div data-l="' + l + '" class="' + (d === t ? 't' : '') + '" title="' + d + ': ' + (a == null ? 'no plan' : Math.round(a * 100) + '% of plan') + ', ' + sm + ' min"></div>'); }
+  return '<div class="card"><h2><span class="t">📅 Consistency · 5 weeks</span></h2><div class="heat">' + ['M','T','W','T','F','S','S'].map(x => '<span>' + x + '</span>').join('') + cells.join('') + '</div>' +
+    '<div class="row small muted" style="margin-top:10px;gap:6px">Less <span style="width:12px;height:12px;border-radius:3px;background:var(--card2);display:inline-block"></span><span style="width:12px;height:12px;border-radius:3px;background:rgba(245,158,11,.5);display:inline-block"></span><span style="width:12px;height:12px;border-radius:3px;background:rgba(245,158,11,.8);display:inline-block"></span><span style="width:12px;height:12px;border-radius:3px;background:var(--good);display:inline-block"></span> More</div></div>';
+}
+function spark(hist, target){
+  const v = hist.map(h => num(h.Score));
+  if (v.length < 2) return '<div class="tiny dim">Trend line appears after your next Miles update.</div>';
+  const w = 300, h = 54, mn = Math.min(...v, 40), mx = Math.max(...v, target + 5), y = x => (h - (x - mn) / (mx - mn) * h).toFixed(1);
+  return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="54" preserveAspectRatio="none"><line x1="0" x2="' + w + '" y1="' + y(target) + '" y2="' + y(target) + '" stroke="#34d399" stroke-dasharray="4 4"/><polyline fill="none" stroke="#f59e0b" stroke-width="2.5" points="' + v.map((x, i) => (i / (v.length - 1) * w).toFixed(1) + ',' + y(x)).join(' ') + '"/></svg>';
+}
+function readinessCard(){
+  const R = readiness(); if (!R) return '<div class="card"><h2>📊 Exam readiness</h2><div class="empty">Add chapter data to see readiness.</div></div>';
+  const gap = R.target - R.score, last = R.hist[R.hist.length - 1];
+  const stale = last ? daysBetween(last.Date, today()) : 99;
+  return '<div class="card"><h2><span class="t">📊 ' + R.sec + ' readiness</span><button class="btn sm" data-act="miles">↻ Update</button></h2>' +
+    '<div class="row" style="align-items:flex-end;gap:12px"><div class="big ' + (R.ready ? 'good' : gap <= 5 ? 'amber' : 'bad') + '">' + R.score.toFixed(0) + '%</div><div class="muted small" style="padding-bottom:4px">target ' + R.target.toFixed(0) + '% · gap ' + Math.max(0, gap).toFixed(1) + ' pts<br>' + (R.ready ? '✅ Ready to sit' : gap <= 5 ? '🟡 Close. Now it\'s all mocks' : '🔴 Not ready yet') + '</div></div>' +
+    '<div class="bar" style="height:10px;margin:12px 0"><i style="width:' + Math.min(100, R.score / R.target * 100) + '%"></i></div>' +
+    '<div class="tiles"><div class="tile"><b>' + R.mAcc.toFixed(0) + '%</b><small>MCQ · need ' + R.tM + '</small></div><div class="tile"><b>' + R.sAcc.toFixed(0) + '%</b><small>SIM · need ' + R.tS + '</small></div><div class="tile"><b>' + R.flagged + '</b><small>flagged left</small></div></div>' +
+    '<div style="margin-top:12px">' + spark(R.hist, R.target) + '</div>' +
+    (stale > 6 ? '<p class="small amber" style="margin:8px 0 0">⚠️ Last Miles update was ' + stale + ' days ago. Update every Sunday, or this number goes stale.</p>' : '') + '</div>';
+}
+function queueCard(){
+  const R = readiness(); if (!R) return '';
+  return '<div class="card"><h2><span class="t">🎯 Where the marks are</span></h2><p class="tiny muted" style="margin:-6px 0 6px">Readiness points gained if each chapter reached target. Study where the return is highest.</p>' +
+    (R.queue.length ? R.queue.map((q, i) => '<div class="rq"><span class="n">' + (i + 1) + '</span><div><b class="small" style="font-size:13.5px">' + esc(q.Code) + ' ' + esc(q.Name) + '</b><div class="tiny muted">MCQ ' + (q.ma == null ? '–' : Math.round(q.ma) + '%') + ' · SIM ' + (q.sa == null ? '–' : Math.round(q.sa) + '%') + ' · 🚩 ' + esc(q.MCQFlagged) + '</div></div><b class="good">+' + q.gain.toFixed(1) + '</b></div>').join('') : '<div class="empty">Every chapter at target.</div>') +
+    '<details><summary>Full chapter table</summary><div style="overflow-x:auto"><table><tr><th>Ch</th><th>MCQ</th><th>SIM</th><th>Flag</th></tr>' + R.rows.map(r => '<tr><td>' + esc(r.Code) + '</td><td class="' + (r.ma == null ? '' : r.ma >= R.tM ? 'good' : r.ma >= R.tM - 15 ? 'amber' : 'bad') + '">' + (r.ma == null ? '–' : Math.round(r.ma) + '%') + '</td><td class="' + (r.sa == null ? '' : r.sa >= R.tS ? 'good' : r.sa >= R.tS - 15 ? 'amber' : 'bad') + '">' + (r.sa == null ? '–' : Math.round(r.sa) + '%') + '</td><td>' + esc(r.MCQFlagged) + '</td></tr>').join('') + '</table></div></details></div>';
+}
+function mocksCard(){
+  const R = readiness(); if (!R) return '';
+  return '<div class="card"><h2><span class="t">📝 Mock exams</span><button class="btn sm" data-act="mock">+ Log mock</button></h2>' +
+    '<p class="small" style="margin:-4px 0 10px">Exam gate: <b class="' + (R.good >= 2 ? 'good' : 'bad') + '">' + R.good + '/2</b> latest full mocks at ≥ ' + R.tM + '%.</p>' +
+    (R.mocks.length ? R.mocks.slice(0, 6).map(m => { const ts = ['T1','T2','T3','T4','T5'].map(k => m[k]), has = ts.some(x => x !== '' && x != null), tl = m.TimeLeftMin;
+      return '<div class="rq" style="grid-template-columns:70px 1fr auto;align-items:start"><span class="tiny muted">' + fmtD(m.Date) + '</span><div><span class="small">' + esc(m.Type) + ' <span class="dim">· MCQ ' + esc(m.MCQPct || '–') + ' / SIM ' + esc(m.SIMPct || '–') + '</span></span>' +
+        (has ? '<div class="tl5">' + ts.map((x, i) => '<span class="' + (x === '' || x == null ? '' : num(x) >= R.tM ? 'hi' : num(x) < 60 ? 'lo' : '') + '">T' + (i + 1) + ' ' + (x === '' || x == null ? '–' : esc(x)) + '</span>').join('') + '</div>' : '') +
+        (tl !== '' && tl != null ? '<div class="tiny ' + (num(tl) < 5 ? 'bad' : 'muted') + '" style="margin-top:4px">⏱ ' + esc(tl) + ' min left at the end' + (num(tl) < 5 ? '. Pacing risk: cap stuck SIM cells at 4–5 min' : '') + '</div>' : '') +
+        '</div><b class="' + (num(m.Score) >= R.tM ? 'good' : 'amber') + '">' + esc(m.Score) + '%</b></div>'; }).join('') + pacingNote(R)
+      : '<div class="empty">No mocks logged yet. Log each one right after you finish it, with testlet scores.</div>') + '</div>';
+}
+function pacingNote(R){
+  const full = R.mocks.filter(m => m.T1 !== '' && m.T1 != null);
+  if (!full.length) return '';
+  const avg = k => { const v = full.map(m => m[k]).filter(x => x !== '' && x != null).map(num); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const t = ['T1','T2','T3','T4','T5'].map(avg), weakest = t.reduce((w, v, i) => v != null && (w < 0 || v < t[w]) ? i : w, -1);
+  return weakest >= 0 ? '<p class="small" style="margin:10px 0 0">Weakest testlet so far: <b class="bad">T' + (weakest + 1) + ' (' + Math.round(t[weakest]) + '%)</b>. ' + (weakest >= 2 ? 'SIMs: write the JE before you touch the cells.' : 'MCQs: drill mixed sets at 1.5 min per question.') + '</p>' : '';
+}
+const ERR_TYPES = ['Sign / Dr-Cr', 'Date / period', 'Rule / concept', 'Rate / math', 'Careless / misread', 'Time pressure'];
+function errorCard(){
+  const E = D.Errors, open = E.filter(e => e.Status !== 'Fixed');
+  const by = (f, list) => { const o = {}; list.forEach(e => { const k = e[f] || '—'; o[k] = (o[k] || 0) + 1; }); return Object.entries(o).sort((a, b) => b[1] - a[1]); };
+  const types = by('Type', E), chs = by('Chapter', open).slice(0, 4), mx = Math.max(1, ...types.map(x => x[1]));
+  const top = types[0];
+  return '<div class="card"><h2><span class="t">🧯 Error log <span class="pill ' + (open.length ? 'bad' : '') + '">' + open.length + ' open</span></span><span class="row" style="gap:6px"><button class="btn ghost sm" data-act="traps">📄 Traps</button><button class="btn sm" data-act="logError">+ Error</button></span></h2>' +
+    (E.length ? '<div class="sec" style="margin:2px 0 6px">What kind of mistakes</div>' + types.map(([k, n]) => '<div class="ebar"><span>' + esc(k) + '</span><div class="bar"><i style="width:' + (n / mx * 100) + '%"></i></div><b style="text-align:right">' + n + '</b></div>').join('') +
+      (top ? '<p class="small" style="margin:8px 0 0"><b>' + Math.round(top[1] / E.length * 100) + '%</b> of your errors are <b class="bad">' + esc(top[0]) + '</b>. ' + ({'Sign / Dr-Cr': 'Write the JE first, always.', 'Date / period': 'Draw a timeline before calculating.', 'Rule / concept': 'Those rules go into your cheat sheets tonight.', 'Rate / math': 'Write the formula before the numbers.', 'Careless / misread': 'Underline what is actually asked.', 'Time pressure': 'Set a 4–5 min cap per stuck SIM cell.'}[top[0]] || '') + '</p>' : '') +
+      (chs.length ? '<div class="sec" style="margin:14px 0 6px">Open errors by chapter</div><div class="row" style="gap:6px">' + chs.map(([k, n]) => '<span class="pill bad">' + esc(k) + ' · ' + n + '</span>').join('') + '</div>' : '')
+    : '<div class="empty">After each mock or MCQ set, log every wrong answer: type, chapter and the rule in one line. In 3 weeks this becomes your personal “Final traps” sheet.</div>') + '</div>';
+}
+function errorForm(prefill){
+  prefill = prefill || {};
+  let type = prefill.Type || '', ch = prefill.Chapter || '';
+  const chapters = D.Chapters.filter(c => c.Section === ((nextExam() || {}).Section || 'FAR')).map(c => c.Code);
+  const src = prefill.Source || (() => { const n = D.Mocks.length; const b = blocks(today()).find(x => ['mock', 'review'].includes(kind(x.Block)[0])); return b ? b.Block.replace(/^\W+/, '').slice(0, 40) : 'Practice'; })();
+  const draw = () => sheet('<h3>🧯 Log a mistake</h3><div class="small muted">Takes 15 seconds. The rule you write is what you reread before the exam.</div>' +
+    '<label>Type of mistake</label><div class="chips" id="etype">' + ERR_TYPES.map(t => '<button type="button" class="' + (t === type ? 'on' : '') + '" data-v="' + esc(t) + '">' + esc(t) + '</button>').join('') + '</div>' +
+    '<label>Chapter</label><div class="chips" id="ech">' + chapters.map(c => '<button type="button" class="' + (c === ch ? 'on' : '') + '" data-v="' + esc(c) + '">' + esc(c) + '</button>').join('') + '</div>' +
+    '<label>Topic</label><input id="etopic" placeholder="e.g. Bond amortization, ARO, NFP contributions" value="' + esc(prefill.Topic || '') + '">' +
+    '<label>The rule, in one line (what you will remember)</label><textarea id="erule" placeholder="e.g. Premium amortization REDUCES interest expense; cash paid = face × stated rate" style="min-height:70px"></textarea>' +
+    '<label>Source</label><input id="esrc" value="' + esc(src) + '">' +
+    '<div class="foot"><button class="btn ghost" id="fcan">Close</button><button class="btn ghost" id="fnext">Save & next</button><button class="btn" id="fok">Save</button></div>');
+  draw();
+  const pick = (id, set) => document.querySelectorAll('#' + id + ' button').forEach(b => b.onclick = () => { set(b.dataset.v); document.querySelectorAll('#' + id + ' button').forEach(x => x.classList.toggle('on', x === b)); });
+  pick('etype', v => type = v); pick('ech', v => ch = v);
+  const save = again => {
+    const rule = document.getElementById('erule').value.trim(), topic = document.getElementById('etopic').value.trim(), source = document.getElementById('esrc').value.trim();
+    if (!type) return toast('Pick the type of mistake');
+    if (!rule) return toast('Write the rule. That is the whole point');
+    put('Errors', {Date: today(), Source: source, Section: (nextExam() || {}).Section || 'FAR', Chapter: ch, Type: type, Topic: topic, Rule: rule, Status: 'Open'}, !again);
+    const n = D.Errors.filter(e => e.Date === today()).length;
+    if (again) { toast('Saved · ' + n + ' logged today'); errorForm({Type: '', Chapter: ch, Source: source}); } else { closeSheet(); render(); toast('Saved · ' + n + ' logged today'); }
+  };
+  document.getElementById('fcan').onclick = () => { closeSheet(); render(); };
+  document.getElementById('fok').onclick = () => save(false);
+  document.getElementById('fnext').onclick = () => save(true);
+}
+function trapsSheet(){
+  const open = D.Errors.filter(e => e.Status !== 'Fixed' && e.Rule);
+  const groups = {}; open.forEach(e => (groups[e.Chapter || 'Other'] = groups[e.Chapter || 'Other'] || []).push(e));
+  const keys = Object.keys(groups).sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
+  sheet('<h3>📄 My Final Traps sheet</h3><div class="small muted">Built from your own mistakes. Read it in the morning and again the day before the exam. Tick a trap only when you have answered that type correctly twice.</div>' +
+    (open.length ? keys.map(k => '<div class="sec" style="margin-top:16px">' + esc(k) + ' · ' + groups[k].length + '</div>' + groups[k].map(e => '<div class="trap row" style="flex-wrap:nowrap;align-items:flex-start"><button class="ck" style="width:22px;height:22px;flex:none" data-act="fixErr" data-id="' + e.ID + '"></button><div><b>' + esc(e.Rule) + '</b><div class="tiny muted">' + esc(e.Type) + (e.Topic ? ' · ' + esc(e.Topic) : '') + '</div></div></div>').join('')).join('')
+      : '<div class="empty" style="margin-top:14px">No open traps. Log mistakes after each mock and they appear here, grouped by chapter.</div>') +
+    '<div class="foot"><button class="btn ghost" id="tcopy">Copy as text</button><button class="btn" onclick="closeSheet()">Done</button></div>');
+  document.getElementById('tcopy').onclick = () => {
+    const txt = 'FINAL TRAPS: ' + ((nextExam() || {}).Section || 'FAR') + '\n' + keys.map(k => '\n' + k + '\n' + groups[k].map((e, i) => (i + 1) + '. ' + e.Rule + ' [' + e.Type + ']').join('\n')).join('\n');
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => toast('Copied. Paste into a doc or WhatsApp')).catch(() => toast('Copy not allowed here'));
+  };
+}
+
+function habitStats(){
+  const hs = D.Habits.filter(h => h.Active !== 'No').sort((a, b) => num(a.Order) - num(b.Order)), t = today();
+  const days = [...Array(7)].map((_, i) => addDays(t, i - 6));
+  if (!hs.length) return '';
+  return '<div class="card"><h2><span class="t">🌱 Habits · 7 days</span></h2><div class="hgrid"><span></span>' + days.map(d => '<span class="tiny dim" style="text-align:center">' + fmtD(d, {weekday: 'narrow'}) + '</span>').join('') +
+    hs.map(h => '<span class="small">' + esc(h.Icon) + ' ' + esc(h.Name) + '</span>' + days.map(d => '<i class="' + (D.HabitLog.some(l => l.Date === d && l.HabitID === h.ID) ? 'on' : '') + '"></i>').join('')).join('') + '</div></div>';
+}
+function socialCard(){
+  const t = today(), lim = num(S().SocialLimitMin) || 30, days = [...Array(7)].map((_, i) => addDays(t, i - 6));
+  const v = days.map(d => { const r = D.Distraction.find(x => x.Date === d) || {}; return {d, m: num(r.Instagram) + num(r.YouTube), res: num(r.Resisted)}; });
+  const mx = Math.max(lim * 1.5, ...v.map(x => x.m)), tot = v.reduce((a, x) => a + x.m, 0), res = v.reduce((a, x) => a + x.res, 0);
+  return '<div class="card"><h2><span class="t">📵 Social media · 7 days</span><button class="link" data-act="social">+ Log</button></h2><div class="bars">' + v.map(x => '<div><span>' + (x.m || '') + '</span><i class="' + (x.m > lim ? 'over' : '') + '" style="height:' + Math.max(3, x.m / mx * 64) + 'px"></i>' + fmtD(x.d, {weekday: 'narrow'}) + '</div>').join('') + '</div>' +
+    '<p class="small" style="margin:10px 0 0">' + dur(tot) + ' this week ≈ <b>' + Math.floor(tot / 1.5) + ' MCQs</b> not solved. 💪 Resisted ' + res + ' time' + (res === 1 ? '' : 's') + '.</p></div>';
+}
+function cfoCard(){
+  const s = S(), t = today(), days = s.CPAStartDate ? daysBetween(s.CPAStartDate, t) : 0, emi = num(s.EMI), paid = Math.floor(days / 30.44) * emi;
+  const hrs = (D.StudyLog.reduce((a, r) => a + num(r.Minutes), 0) + D.Plan.filter(p => p.Done === 'Yes' && isStudy(p.Block)).reduce((a, p) => { const x = parseT(p.Time); return a + (x.e != null ? x.e - x.s : 0); }, 0)) / 60;
+  const passed = D.CPA.filter(c => c.Status === 'Passed').length;
+  return '<div class="card"><h2><span class="t">💼 CFO view of my CPA investment</span></h2><div class="score">' +
+    '<div class="tile"><b>' + inr(paid) + '</b><small>EMI paid so far (approx.)</small></div>' +
+    '<div class="tile"><b>' + hrs.toFixed(0) + 'h</b><small>study hours tracked</small></div>' +
+    '<div class="tile"><b>' + (hrs ? inr(paid / hrs) : '—') + '</b><small>cost per study hour</small></div>' +
+    '<div class="tile"><b>' + passed + '/4</b><small>sections passed</small></div></div>' +
+    '<p class="small muted" style="margin:10px 0 0">' + (s.PromiseToSelf ? '“' + esc(s.PromiseToSelf) + '” ' : '') + 'Every hour you tick lowers the cost per hour. That is your ROI line.</p></div>';
+}
+
+/* ═════════ JOURNAL: how I feel & think ═════════ */
+const MOODS = ['😞','😕','😐','🙂','🔥'];
+function vJournal(){
+  const t = today(), dl = D.DayLog.find(r => r.Date === t);
+  const winsGoals = {}; D.Goals.forEach(g => winsGoals[g.ID] = g.Title);
+  const logs = [...D.GoalLog].sort((a, b) => b.Date.localeCompare(a.Date)).slice(0, 12);
+  const th = [...D.Thoughts].sort((a, b) => b.Date.localeCompare(a.Date)).slice(0, 20);
+  const past = [...D.DayLog].sort((a, b) => b.Date.localeCompare(a.Date)).slice(0, 14);
+  const lane = (st, title) => { const ids = D.Ideas.filter(i => st.includes(i.Status || 'Captured'));
+    return '<div class="lane"><h4>' + title + ' · ' + ids.length + '</h4>' + (ids.map(i => '<div class="idea" data-act="editIdea" data-id="' + i.ID + '"><b>' + esc(i.Title) + '</b>' + (i.NextStep ? '<div class="tiny muted" style="margin-top:4px">➡️ ' + esc(i.NextStep) + '</div>' : '') + '</div>').join('') || '<div class="tiny dim">—</div>') + '</div>'; };
+  return '<div class="cols"><div class="stack">' +
+    '<div class="card"><h2><span class="t">🌙 Today\'s check-in</span>' + (dl ? '<span class="pill good">done</span>' : '') + '</h2>' +
+      (dl ? '<div class="row"><span style="font-size:30px">' + (MOODS[num(dl.Mood) - 1] || '🙂') + '</span><div class="grow small">' + (dl.Win ? '<div><b>Win:</b> ' + esc(dl.Win) + '</div>' : '') + (dl.Lesson ? '<div><b>Lesson:</b> ' + esc(dl.Lesson) + '</div>' : '') + (dl.Gratitude ? '<div><b>Grateful for:</b> ' + esc(dl.Gratitude) + '</div>' : '') + '</div></div><button class="btn ghost sm" style="margin-top:10px" data-act="checkin">Edit</button>'
+        : '<p class="muted small" style="margin:0 0 10px">How was today? Takes 60 seconds.</p><button class="btn" style="width:100%" data-act="checkin">Start check-in</button>') + '</div>' +
+    '<div class="card"><h2><span class="t">💭 Thoughts</span></h2><form class="qadd" data-sub="thought" style="margin:0 0 8px"><input name="t" placeholder="What\'s on your mind?" autocomplete="off"><button class="btn sm">Save</button></form>' +
+      (th.length ? th.map(x => '<div class="entry"><div class="tiny dim">' + fmtD(x.Date) + (x.Mood ? ' · ' + esc(x.Mood) : '') + ' <button class="xbtn" data-act="delThought" data-id="' + x.ID + '">✕</button></div><div class="small" style="white-space:pre-wrap">' + esc(x.Text) + '</div></div>').join('') : '<div class="empty">Nothing yet.</div>') + '</div>' +
+  '</div><div class="stack">' +
+    '<div class="card"><h2><span class="t">💡 Ideas → action</span><button class="link" data-act="addIdea">+ Idea</button></h2><div class="grid2" style="gap:8px;grid-template-columns:1fr 1fr">' + lane(['Captured','Evaluating'], 'Captured') + lane(['In Progress','Implemented'], 'Doing / done') + '</div></div>' +
+    '<div class="card"><h2><span class="t">🏆 Wins & 💔 setbacks</span><button class="link" data-act="addWin">+ Log</button></h2>' +
+      (logs.length ? logs.map(l => '<div class="entry"><div class="tiny dim">' + ({Win: '🏆', Breakage: '💔', Improvement: '📈'}[l.Type] || '•') + ' ' + fmtD(l.Date) + (winsGoals[l.GoalID] ? ' · ' + esc(winsGoals[l.GoalID]) : '') + '</div><div class="small">' + esc(l.Note) + '</div>' + (l.Lesson ? '<div class="small amber">→ ' + esc(l.Lesson) + '</div>' : '') + '</div>').join('') : '<div class="empty">Log wins and setbacks. The lessons are what you will reread before the exam.</div>') + '</div>' +
+    (past.length > 1 ? '<div class="card"><h2><span class="t">📈 Mood · last 2 weeks</span></h2><div class="row" style="gap:4px;font-size:22px">' + past.reverse().map(p => '<span title="' + p.Date + '">' + (MOODS[num(p.Mood) - 1] || '·') + '</span>').join('') + '</div></div>' : '') +
+  '</div></div>';
+}
+
+/* ═════════ sheets (forms) ═════════ */
+function sheet(html){ const o = document.getElementById('ov'); document.getElementById('sheet').innerHTML = '<div class="grab"></div>' + html; o.classList.add('show'); setTimeout(() => { const f = o.querySelector('input:not([type=hidden]):not([type=range]),textarea'); f && f.focus(); }, 60); }
+function closeSheet(){ document.getElementById('ov').classList.remove('show'); }
+document.getElementById('ov').addEventListener('click', e => { if (e.target.id === 'ov') closeSheet(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSheet(); } });
+function form(title, fields, onSave, opt){
+  opt = opt || {};
+  const f = fields.map(x => {
+    const v = esc(x.value ?? ''), id = 'f_' + x.name;
+    const inp = x.type === 'select' ? '<select id="' + id + '">' + x.options.map(o => { const [val, lab] = Array.isArray(o) ? o : [o, o]; return '<option value="' + esc(val) + '"' + (String(val) === String(x.value) ? ' selected' : '') + '>' + esc(lab) + '</option>'; }).join('') + '</select>'
+      : x.type === 'textarea' ? '<textarea id="' + id + '" placeholder="' + esc(x.ph || '') + '">' + v + '</textarea>'
+      : '<input id="' + id + '" type="' + (x.type || 'text') + '" value="' + v + '" placeholder="' + esc(x.ph || '') + '">';
+    return '<label for="' + id + '">' + esc(x.label) + '</label>' + inp;
+  }).join('');
+  sheet('<h3>' + esc(title) + '</h3>' + (opt.sub ? '<div class="small muted">' + opt.sub + '</div>' : '') + f +
+    '<div class="foot">' + (opt.onDelete ? '<button class="btn ghost" id="fdel" style="flex:0 0 auto;color:var(--bad)">Delete</button>' : '') + '<button class="btn ghost" id="fcan">Cancel</button><button class="btn" id="fok">' + (opt.ok || 'Save') + '</button></div>');
+  document.getElementById('fcan').onclick = closeSheet;
+  if (opt.onDelete) document.getElementById('fdel').onclick = () => { if (confirm('Delete this?')) { closeSheet(); opt.onDelete(); } };
+  document.getElementById('fok').onclick = () => {
+    const o = {}; fields.forEach(x => o[x.name] = document.getElementById('f_' + x.name).value.trim());
+    const miss = fields.find(x => x.req && !o[x.name]); if (miss) return toast(miss.label + ' is required');
+    closeSheet(); onSave(o);
+  };
+}
+function checkin(){
+  const t = today(), dl = D.DayLog.find(r => r.Date === t) || {};
+  let mood = num(dl.Mood) || 0;
+  sheet('<h3>🌙 Close the day</h3><div class="small muted">' + fmtD(t, {weekday: 'long', day: 'numeric', month: 'long'}) + '</div><label>Mood</label><div class="moods" id="moods">' + MOODS.map((m, i) => '<button type="button" class="' + (mood === i + 1 ? 'on' : '') + '" data-m="' + (i + 1) + '">' + m + '</button>').join('') + '</div>' +
+    '<label>Energy</label><select id="c_en">' + ['', 'Drained', 'Low', 'OK', 'Good', 'Charged'].map((x, i) => '<option value="' + (i || '') + '"' + (num(dl.Energy) === i && i ? ' selected' : '') + '>' + (x || 'Choose…') + '</option>').join('') + '</select>' +
+    '<label>One win today</label><input id="c_win" value="' + esc(dl.Win || '') + '" placeholder="e.g. Finished 45 FAR-8 MCQs at 68%">' +
+    '<label>One lesson / what to fix tomorrow</label><input id="c_les" value="' + esc(dl.Lesson || '') + '" placeholder="e.g. Phone stays in the bag at the library">' +
+    '<label>Grateful for</label><input id="c_gr" value="' + esc(dl.Gratitude || '') + '" placeholder="optional">' +
+    '<div class="foot"><button class="btn ghost" id="fcan">Cancel</button><button class="btn" id="fok">Close the day</button></div>');
+  document.querySelectorAll('#moods button').forEach(b => b.onclick = () => { mood = +b.dataset.m; document.querySelectorAll('#moods button').forEach(x => x.classList.toggle('on', x === b)); });
+  document.getElementById('fcan').onclick = closeSheet;
+  document.getElementById('fok').onclick = () => {
+    put('DayLog', {ID: 'd' + ymd(t), Date: t, Mood: mood || '', Energy: document.getElementById('c_en').value, Win: document.getElementById('c_win').value.trim(), Lesson: document.getElementById('c_les').value.trim(), Gratitude: document.getElementById('c_gr').value.trim()});
+    closeSheet(); confetti(innerWidth / 2, innerHeight / 3, 60, true); toast('🌙 Day closed · +15 XP. Sleep on time.');
+  };
+}
+function socialSheet(){
+  const t = today(), r = D.Distraction.find(x => x.Date === t) || {ID: 'x' + ymd(t), Date: t, Instagram: 0, YouTube: 0, Resisted: 0};
+  const add = (f, n) => { r[f] = num(r[f]) + n; put('Distraction', {ID: r.ID, Date: t, Instagram: num(r.Instagram), YouTube: num(r.YouTube), Resisted: num(r.Resisted)}, true); socialSheet(); render(); };
+  window.__soc = add;
+  const tot = num(r.Instagram) + num(r.YouTube), lim = num(S().SocialLimitMin) || 30;
+  sheet('<h3>📵 Social media today</h3><div class="small muted">Be honest. The number only helps if it\'s true.</div>' +
+    '<div class="tiles" style="margin-top:14px"><div class="tile"><b>' + num(r.Instagram) + 'm</b><small>Instagram</small></div><div class="tile"><b>' + num(r.YouTube) + 'm</b><small>YouTube</small></div><div class="tile"><b class="' + (tot > lim ? 'bad' : 'good') + '">' + tot + '/' + lim + '</b><small>total · limit</small></div></div>' +
+    '<label>Instagram</label><div class="row"><button class="btn ghost sm" onclick="__soc(\'Instagram\',5)">+5 min</button><button class="btn ghost sm" onclick="__soc(\'Instagram\',15)">+15 min</button><button class="btn ghost sm" onclick="__soc(\'Instagram\',-5)">−5</button></div>' +
+    '<label>YouTube</label><div class="row"><button class="btn ghost sm" onclick="__soc(\'YouTube\',5)">+5 min</button><button class="btn ghost sm" onclick="__soc(\'YouTube\',15)">+15 min</button><button class="btn ghost sm" onclick="__soc(\'YouTube\',-5)">−5</button></div>' +
+    '<button class="btn good" style="width:100%;margin-top:16px" onclick="__soc(\'Resisted\',1)">💪 I felt the urge and resisted (' + num(r.Resisted) + ')</button>' +
+    (tot ? '<p class="small" style="margin:12px 0 0">' + tot + ' min ≈ <b>' + Math.floor(tot / 1.5) + ' MCQs</b> you could have solved.</p>' : '') +
+    '<div class="foot"><button class="btn ghost" onclick="closeSheet()">Done</button></div>');
+}
+function milesSheet(){
+  const R = readiness(), f = ['MCQAttempted', 'MCQFlagged', 'MCQCorrect', 'SIMAttempted', 'SIMAcc'];
+  sheet('<h3>↻ Update ' + esc(R.sec) + ' from ' + esc(S().ReviewCourse || 'Miles') + '</h3><div class="small muted">Copy from Miles → View Detailed Reports. Each update adds a point to your trend line.</div>' +
+    '<div style="overflow-x:auto;margin-top:10px"><table id="mt"><tr><th>Ch</th><th>MCQ att.</th><th>Flagged</th><th>Correct</th><th>SIM att.</th><th>SIM %</th></tr>' +
+    R.rows.map(c => '<tr data-id="' + c.ID + '"><td><b>' + esc(c.Code) + '</b></td>' + f.map(k => '<td><input type="number" data-f="' + k + '" value="' + esc(c[k]) + '" style="width:64px;padding:6px"></td>').join('') + '</tr>').join('') + '</table></div>' +
+    '<label>Note</label><input id="mnote" placeholder="e.g. Cleared FAR-3 flags">' +
+    '<div class="foot"><button class="btn ghost" onclick="closeSheet()">Cancel</button><button class="btn" id="mok">Save snapshot</button></div>');
+  document.getElementById('mok').onclick = () => {
+    const rows = [...document.querySelectorAll('#mt tr[data-id]')].map(tr => { const o = {ID: tr.dataset.id}; tr.querySelectorAll('input').forEach(i => o[i.dataset.f] = i.value); return o; });
+    if (rows.some(r => num(r.MCQCorrect) > num(r.MCQAttempted) || num(r.SIMAcc) > 100)) return toast('Check: correct > attempted, or SIM % > 100');
+    const note = document.getElementById('mnote').value.trim(), before = R.score; closeSheet(); SAVING++; setSave('busy');
+    run('updateChapters', R.sec, rows, note).then(d => { SAVING--; setSave(''); if (d && d.Settings) { SHEETS.forEach(n => d[n] = d[n] || []); D = d; } render(); const a = readiness(R.sec).score - before; toast('Snapshot saved ' + (a >= 0 ? '▲ +' : '▼ ') + a.toFixed(1) + ' pts'); })
+      .catch(e => { SAVING--; setSave('err'); toast('⚠️ ' + (e.message || e)); });
+  };
+}
+
+/* ═════════ settings & data ═════════ */
+function settingsSheet(focus){
+  const s = S();
+  const F = [['Name', 'Name', 'text'], ['Email', 'Reminder email', 'email'], ['CPAStartDate', 'CPA journey start', 'date'], ['EMI', 'Monthly EMI (₹)', 'number'], ['LoanAmount', 'Education loan (₹)', 'number'],
+    ['DailyStudyTargetMin', 'Daily study goal (min)', 'number'], ['SocialLimitMin', 'Daily social-media limit (min)', 'number'], ['TargetMCQAcc', 'Ready-to-sit MCQ accuracy (%)', 'number'], ['TargetSIMAcc', 'Ready-to-sit SIM accuracy (%)', 'number'],
+    ['WhyCPA', 'My why', 'textarea'], ['PromiseToSelf', 'Promise to myself', 'textarea']];
+  const hs = D.Habits.filter(h => h.Active !== 'No').sort((a, b) => num(a.Order) - num(b.Order));
+  sheet('<h3>⚙️ Settings & data</h3>' +
+    '<div class="card" style="margin-top:12px;padding:14px;border-color:rgba(52,211,153,.35)"><b>💾 Where your data lives</b><p class="small muted" style="margin:6px 0 10px">Everything you do here saves automatically, within a second, to a Google Sheet in <b>your own Google Drive</b>. Nothing is stored on this website or anywhere else. Daily backups are copied to a <b>“Sunil OS Backups”</b> folder in the same Drive, and the last 30 are kept.</p><div id="dinfo" class="small muted">Checking…</div>' +
+      '<div class="row" style="margin-top:10px"><button class="btn sm" id="bk">Back up now</button><a class="btn ghost sm" id="shl" target="_blank" href="' + esc(D.sheetUrl || '#') + '">Open data sheet ↗</a><button class="btn ghost sm" onclick="lockDevice()">🔒 Lock this device</button></div></div>' +
+    '<div class="card" style="margin-top:12px;padding:14px;border-color:rgba(96,165,250,.35)" id="s-cal"><b>📅 Phone alerts for every block</b><p class="small muted" style="margin:6px 0 10px">Your plan is copied to a Google Calendar called <b>“Sunil OS – Plan”</b> (next 21 days). Each block gets an alert at its start time. It re-syncs every hour, and shortly after you edit a block.</p><div id="cinfo" class="small muted"></div>' +
+      '<div class="row" style="margin-top:10px"><button class="btn sm" data-act="calSync">' + (S().CalendarSync === 'on' ? '↻ Sync now' : 'Turn on phone alerts') + '</button></div>' +
+      '<details><summary>Show it on your iPhone</summary><ol class="small muted" style="padding-left:18px;margin:8px 0 0;line-height:1.7"><li>iPhone Settings → Calendar → Accounts → add your Google account (skip if already added).</li><li>Open <b>calendar.google.com/calendar/syncselect</b> in Safari, tick <b>Sunil OS – Plan</b>, Save.</li><li>Calendar app → Calendars → make sure “Sunil OS – Plan” is ticked.</li><li>Or install the Google Calendar app: alerts work with no setup.</li></ol></details></div>' +
+    '<div class="sec" style="margin-top:18px" id="s-habits">Daily habits</div>' + hs.map(h => '<div class="row" style="padding:6px 0;border-bottom:1px solid var(--line)"><span>' + esc(h.Icon) + '</span><span class="grow small">' + esc(h.Name) + '</span><button class="xbtn" data-act="delHabit" data-id="' + h.ID + '">Remove</button></div>').join('') +
+      '<form class="qadd" data-sub="addHabit"><input name="i" placeholder="🙂" style="width:60px;flex:none" maxlength="4"><input name="t" placeholder="New habit, e.g. 10 pushups"><button class="btn sm">Add</button></form>' +
+    '<div class="sec" style="margin-top:18px">Reminders (email)</div><p class="small muted" style="margin:0 0 8px">6:30 AM brief · 9 PM study nudge · 10:45 PM review · Sunday scorecard · 3 AM backup</p>' +
+      '<div class="row"><button class="btn sm" data-act="rem" data-on="1">Turn on</button><button class="btn ghost sm" data-act="rem" data-on="0">Turn off</button><button class="btn ghost sm" data-act="testMail">Send test</button></div>' +
+    '<div class="sec" style="margin-top:18px">Profile & targets</div>' +
+    F.map(([k, l, t]) => '<label>' + l + '</label>' + (t === 'textarea' ? '<textarea data-set="' + k + '">' + esc(s[k] || '') + '</textarea>' : '<input type="' + t + '" data-set="' + k + '" value="' + esc(s[k] || '') + '">')).join('') +
+    '<div class="foot"><button class="btn" onclick="closeSheet()">Done</button></div>');
+  document.querySelectorAll('[data-set]').forEach(el => el.addEventListener('change', () => { setting(el.dataset.set, el.value); toast('Saved'); }));
+  run('dataInfo').then(i => { if (!i) return; document.getElementById('dinfo').innerHTML = '📄 <b>' + esc(i.sheetName) + '</b> · owner ' + esc(i.owner) + '<br>🕒 Last backup: <b>' + (i.lastBackup ? esc(i.lastBackup) : 'none yet') + '</b>' + (i.folderUrl ? ' · <a target="_blank" href="' + esc(i.folderUrl) + '">open backups ↗</a>' : ''); document.getElementById('shl').href = i.sheetUrl; }).catch(() => { document.getElementById('dinfo').textContent = ''; });
+  document.getElementById('bk').onclick = e => { e.target.textContent = 'Backing up…'; run('backupNow').then(r => { toast('✅ Backup saved to your Drive'); settingsSheet(); }).catch(err => { e.target.textContent = 'Back up now'; toast('⚠️ ' + (err.message || err)); }); };
+  run('calendarInfo').then(c => { const el = document.getElementById('cinfo'); if (el && c) el.innerHTML = c.on ? '✅ On · last sync <b>' + esc(c.last || '—') + '</b>' : 'Off'; }).catch(() => {});
+  if (focus === 'habits') setTimeout(() => document.getElementById('s-habits').scrollIntoView({behavior: 'smooth'}), 80);
+  if (focus === 'cal') setTimeout(() => document.getElementById('s-cal').scrollIntoView({behavior: 'smooth'}), 80);
+}
+
+/* ═════════ focus timer ═════════ */
+let F = {total: 50 * 60, left: 50 * 60, run: false, id: null, block: null, t0: 0};
+function openFocus(blockId){
+  const b = blockId ? D.Plan.find(p => p.ID === blockId) : null;
+  F.block = b ? b.ID : null;
+  if (!F.run) { let m = 50; if (b) { const x = parseT(b.Time); if (x.e != null) { const n = nowMin(); m = (b.Date === today() && n > x.s && n < x.e) ? x.e - n : x.e - x.s; } } F.total = F.left = Math.max(5, Math.min(240, m)) * 60; }
+  document.getElementById('fwhat').textContent = b ? b.Block : 'Free focus block: pick one task and stay on it';
+  document.getElementById('fpre').innerHTML = [25, 50, 90].map(m => '<button class="' + (F.total === m * 60 ? 'on' : '') + '" data-act="fSet" data-m="' + m + '">' + m + ' min</button>').join('');
+  fDraw(); document.getElementById('focus').classList.add('show');
+}
+function fDraw(){
+  const mm = Math.floor(F.left / 60), ss = F.left % 60;
+  document.getElementById('ftime').textContent = mm >= 60 ? Math.floor(mm / 60) + ':' + pad(mm % 60) + ':' + pad(ss) : pad(mm) + ':' + pad(ss);
+  document.getElementById('fsub').textContent = F.run ? 'focusing' : F.left < F.total ? 'paused' : 'ready';
+  document.getElementById('farc').style.strokeDashoffset = (339.3 * (1 - F.left / F.total)).toFixed(1);
+  document.getElementById('fgo').textContent = F.run ? '⏸ Pause' : F.left < F.total ? '▶ Resume' : '▶ Start';
+  if (F.run) document.title = '⏱ ' + document.getElementById('ftime').textContent + ' · Sunil OS';
+}
+let WL = null;
+function fToggle(){
+  if (F.run) { F.run = false; clearInterval(F.id); document.title = 'Sunil OS'; try { WL && WL.release(); } catch (e) {} }
+  else { F.run = true; F.t0 = Date.now() - (F.total - F.left) * 1000; F.id = setInterval(() => { F.left = Math.max(0, F.total - Math.round((Date.now() - F.t0) / 1000)); fDraw(); if (!F.left) { beep(); fFinish(); } }, 500);
+    try { navigator.wakeLock && navigator.wakeLock.request('screen').then(w => WL = w).catch(() => {}); } catch (e) {} }
+  fDraw();
+}
+function fFinish(){
+  const mins = Math.round((F.total - F.left) / 60); F.run = false; clearInterval(F.id); document.title = 'Sunil OS';
+  document.getElementById('focus').classList.remove('show');
+  if (mins < 1) { F.left = F.total; return toast('Nothing to log yet'); }
+  if (F.block) { put('Plan', {ID: F.block, Done: 'Yes'}); toast('✓ Block done · ' + mins + ' min focused'); }
+  else { put('StudyLog', {Date: today(), Section: (nextExam() || {}).Section || 'FAR', Minutes: mins, Notes: 'Focus timer'}); toast('✓ ' + mins + ' min logged'); }
+  confetti(innerWidth / 2, innerHeight / 2, 90, true); F.left = F.total; F.block = null;
+}
+function beep(){ try { const a = new (window.AudioContext || window.webkitAudioContext)(); [0, .35, .7].forEach(t => { const o = a.createOscillator(); o.frequency.value = 880; o.connect(a.destination); o.start(a.currentTime + t); o.stop(a.currentTime + t + .22); }); } catch (e) {} }
+
+/* ═════════ actions (one delegated handler) ═════════ */
+const TEMPLATES = {
+  work: [['06:00-07:00','🌅 Reading: weakest chapter cheat sheet → blurt JEs from memory'],['09:00-09:30','🚗 Commute: audio lecture / flashcards'],['09:30-18:30','💼 Office'],['13:30-14:00','⏱️ Flashcards (lunch)'],
+         ['19:00-19:45','🤰 Garbh Sanskar time with wife'],['20:00-21:30','📚 Library: 40-50 MCQs → review every wrong'],['21:30-22:30','📚 Library: 2 SIMs (JE-first) + error log'],['22:45-23:00','🌙 Close the day + plan tomorrow'],['23:00','😴 Sleep']],
+  off:  [['07:00-09:00','🌅 Reading: cheat sheet + blurt'],['09:30-12:30','✍️ MCQs timed + review'],['12:30-13:30','🍽️ Lunch & family'],['14:00-17:00','🎯 SIMs timed + error log'],['17:30-18:30','🚶 Walk with wife'],['20:00-22:00','📚 Spaced recall: weak chapters'],['22:30','🌙 Weekly review + close the day']]
+};
+const A = {
+  tab: d => { TAB = d.t; try { localStorage.setItem('sos_tab', TAB); } catch (e) {} if (TAB === 'today') DATE = today(); render(); if (d.scroll) setTimeout(() => { const el = document.getElementById(d.scroll); el && el.scrollIntoView({behavior: 'smooth'}); }, 50); },
+  day: d => { DATE = d.d; render(); },
+  openDay: d => { DATE = d.d; TAB = 'today'; render(); },
+  toggle: (d, el) => { const p = D.Plan.find(x => x.ID === d.id); const on = p.Done !== 'Yes'; put('Plan', {ID: d.id, Done: on ? 'Yes' : 'No'});
+    if (on) { const r = el.getBoundingClientRect(); confetti(r.left + 13, r.top + 13, 26); if (navigator.vibrate) navigator.vibrate(20);
+      const bs = blocks(p.Date); toast(bs.every(b => b.Done === 'Yes') ? '🏆 Every block done today!' : '+10 XP · ' + PRAISE[Math.floor(Math.random() * PRAISE.length)]); } },
+  done: (d, el) => { put('Plan', {ID: d.id, Done: 'Yes'}); const r = el.getBoundingClientRect(); confetti(r.left + r.width / 2, r.top, 40); toast('+10 XP · ' + PRAISE[Math.floor(Math.random() * PRAISE.length)]); },
+  skip: d => { put('Plan', {ID: d.id, Done: 'Skip'}); toast('Skipped. Consider moving it to tomorrow.'); },
+  move: d => { const p = D.Plan.find(x => x.ID === d.id); put('Plan', {ID: p.ID, Done: 'Skip'}, true); put('Plan', {Date: addDays(p.Date < today() ? today() : p.Date, 1), Time: p.Time, Block: p.Block, Done: 'No'}); toast('Moved to ' + fmtD(addDays(p.Date < today() ? today() : p.Date, 1))); },
+  moveAll: d => { const ms = blocks(d.d).filter(b => bstatus(b, d.d) === 'missed'); const to = addDays(d.d < today() ? today() : d.d, 1);
+    ms.forEach(p => { put('Plan', {ID: p.ID, Done: 'Skip'}, true); put('Plan', {Date: to, Time: p.Time, Block: p.Block, Done: 'No'}, true); }); render(); toast(ms.length + ' block' + (ms.length > 1 ? 's' : '') + ' moved to ' + fmtD(to)); },
+  addBlock: () => form('Add a block · ' + fmtD(DATE || today()), [{name: 'Time', label: 'Time (e.g. 20:00-21:30)', value: '20:00-21:30', req: true}, {name: 'Block', label: 'What exactly will you do?', req: true, ph: 'e.g. 📚 40 FAR-3 MCQs → review every wrong'}], o => { put('Plan', {Date: DATE || today(), Time: o.Time, Block: o.Block, Done: 'No'}); toast('Block added'); }),
+  editBlock: d => { const p = D.Plan.find(x => x.ID === d.id); form('Edit block', [{name: 'Date', label: 'Date', type: 'date', value: p.Date}, {name: 'Time', label: 'Time', value: p.Time, req: true}, {name: 'Block', label: 'Block', type: 'textarea', value: p.Block, req: true},
+    {name: 'Done', label: 'Status', type: 'select', options: [['No', 'Not done'], ['Yes', 'Done'], ['Skip', 'Skipped']], value: p.Done || 'No'}], o => put('Plan', {ID: p.ID, ...o}), {onDelete: () => drop('Plan', p.ID)}); },
+  tpl: d => { const dt = DATE || today(); TEMPLATES[d.k].forEach(([t, b]) => put('Plan', {Date: dt, Time: t, Block: b, Done: 'No'}, true)); render(); toast('Template loaded. Tap any block to edit it.'); },
+  habit: (d, el) => { const dt = DATE || today(), id = 'h' + ymd(dt) + d.id, ex = D.HabitLog.find(l => l.ID === id || (l.Date === dt && l.HabitID === d.id));
+    if (ex) drop('HabitLog', ex.ID); else { put('HabitLog', {ID: id, Date: dt, HabitID: d.id}); const r = el.getBoundingClientRect(); confetti(r.left + 20, r.top + 10, 16); } },
+  task: (d, el) => { const x = D.Tasks.find(t => t.ID === d.id), on = x.Status !== 'Done'; put('Tasks', {ID: x.ID, Status: on ? 'Done' : 'Pending', Completed: on ? today() : ''}); if (on) { const r = el.getBoundingClientRect(); confetti(r.left + 11, r.top + 11, 22); toast('Done ✅'); } },
+  addTask: () => taskForm({}),
+  editTask: d => taskForm(D.Tasks.find(t => t.ID === d.id)),
+  taskf: d => { TASKF = d.f; render(); },
+  social: () => socialSheet(),
+  checkin: () => checkin(),
+  miles: () => milesSheet(),
+  mock: () => form('Log a mock exam', [{name: 'Type', label: 'Type', type: 'select', options: ['Mocktest', 'Practice Exam', 'Mini Mocktest', 'AICPA Released'], value: 'Mocktest'}, {name: 'Date', label: 'Date', type: 'date', value: today()},
+    {name: 'T1', label: 'Testlet 1 · MCQ %', type: 'number'}, {name: 'T2', label: 'Testlet 2 · MCQ %', type: 'number'}, {name: 'T3', label: 'Testlet 3 · SIM %', type: 'number'}, {name: 'T4', label: 'Testlet 4 · SIM %', type: 'number'}, {name: 'T5', label: 'Testlet 5 · SIM %', type: 'number'},
+    {name: 'TimeLeftMin', label: 'Minutes left when you finished', type: 'number'}, {name: 'MCQPct', label: 'Or overall MCQ % (if no testlet split)', type: 'number'}, {name: 'SIMPct', label: 'Or overall SIM %', type: 'number'}, {name: 'Notes', label: 'Weak spots it exposed', type: 'textarea'}],
+    o => { const av = ks => { const v = ks.map(k => o[k]).filter(x => x !== '').map(num); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : null; };
+      const m = av(['T1', 'T2']) ?? (o.MCQPct === '' ? null : num(o.MCQPct)), s = av(['T3', 'T4', 'T5']) ?? (o.SIMPct === '' ? null : num(o.SIMPct));
+      o.MCQPct = m ?? ''; o.SIMPct = s ?? ''; o.Score = m != null && s != null ? Math.round((m + s) / 2 * 10) / 10 : (m ?? s ?? '');
+      put('Mocks', {...o, Section: (nextExam() || {}).Section || 'FAR'}); toast('Mock logged · now log each wrong answer in the error log');
+      setTimeout(() => errorForm({Source: o.Type + ' ' + fmtD(o.Date)}), 700); }, {sub: 'Enter testlet scores from the score report. The app finds your weakest testlet and pacing problems.'}),
+  logError: () => errorForm(),
+  traps: () => trapsSheet(),
+  fixErr: (d, el) => { put('Errors', {ID: d.id, Status: 'Fixed'}, true); el.closest('.trap').style.opacity = .35; el.textContent = '✓'; el.style.background = 'var(--good)'; toast('Trap cleared 💪'); },
+  calSync: (d, el) => { el.textContent = 'Syncing…'; run('syncCalendar').then(r => { setting('CalendarSync', 'on'); toast(r && r.busy ? 'Sync already running' : '📅 Calendar synced · ' + ((r.created || 0) + (r.updated || 0)) + ' blocks'); settingsSheet('cal'); }).catch(e => { el.textContent = 'Turn on phone alerts'; toast('⚠️ ' + (e.message || e)); }); },
+  editSection: d => { const c = D.CPA.find(x => x.ID === d.id); form(c.Section + ' section', [{name: 'Status', label: 'Status', type: 'select', options: ['Not Started', 'Studying', 'NTS Paid', 'Exam Scheduled', 'Passed', 'Failed – Retake'], value: c.Status},
+    {name: 'TargetDate', label: 'Exam date', type: 'date', value: c.TargetDate}, {name: 'Score', label: 'Score', type: 'number', value: c.Score}, {name: 'Notes', label: 'Notes', type: 'textarea', value: c.Notes}], o => { put('CPA', {ID: c.ID, ...o}); if (o.Status === 'Passed') { confetti(innerWidth / 2, innerHeight / 3, 200, true); toast('🎉 ' + c.Section + ' PASSED!'); } }); },
+  addMilestone: () => form('Add a milestone', [{name: 'Title', label: 'What', req: true}, {name: 'Date', label: 'Date', type: 'date', req: true}, {name: 'Icon', label: 'Emoji', value: '📍'}, {name: 'Note', label: 'Note'}], o => put('Milestones', o)),
+  editMilestone: d => { const m = D.Milestones.find(x => x.ID === d.id); form('Edit milestone', [{name: 'Title', label: 'What', value: m.Title, req: true}, {name: 'Date', label: 'Date', type: 'date', value: m.Date, req: true}, {name: 'Icon', label: 'Emoji', value: m.Icon}, {name: 'Note', label: 'Note', value: m.Note}], o => put('Milestones', {ID: m.ID, ...o}), {onDelete: () => drop('Milestones', m.ID)}); },
+  addGoal: () => goalForm({}), editGoal: d => goalForm(D.Goals.find(g => g.ID === d.id)),
+  addCourse: () => courseForm({}), editCourse: d => courseForm(D.Courses.find(c => c.ID === d.id)),
+  courseUp: d => { const c = D.Courses.find(x => x.ID === d.id), n = Math.min(num(c.TotalUnits), num(c.DoneUnits) + 1); put('Courses', {ID: c.ID, DoneUnits: n, Status: n >= num(c.TotalUnits) ? 'Completed' : 'In Progress'}); toast(n >= num(c.TotalUnits) ? '🎉 Course finished!' : 'Module done ✅'); },
+  addIdea: () => ideaForm({}), editIdea: d => ideaForm(D.Ideas.find(i => i.ID === d.id)),
+  addWin: () => form('Log a win or setback', [{name: 'Type', label: 'Type', type: 'select', options: [['Win', '🏆 Win'], ['Breakage', '💔 Setback'], ['Improvement', '📈 Improvement']]},
+    {name: 'GoalID', label: 'Related goal', type: 'select', options: [['', '—']].concat(D.Goals.filter(g => g.Status === 'Active').map(g => [g.ID, g.Title]))}, {name: 'Note', label: 'What happened?', type: 'textarea', req: true}, {name: 'Lesson', label: 'Lesson / what you\'ll do differently', type: 'textarea'}],
+    o => { if (o.Type === 'Breakage' && !o.Lesson) return toast('Add the lesson. That\'s the point of logging a setback'); put('GoalLog', {...o, Date: today()}); toast(o.Type === 'Win' ? '🏆 Logged' : 'Logged. Owning it is the first fix'); }),
+  delThought: d => drop('Thoughts', d.id),
+  openSettings: d => settingsSheet(d.s),
+  delHabit: d => { put('Habits', {ID: d.id, Active: 'No'}, true); settingsSheet('habits'); render(); },
+  rem: d => run(d.on === '1' ? 'installTriggers' : 'removeTriggers').then(r => toast(r || 'Done')).catch(e => toast('⚠️ ' + (e.message || e))),
+  testMail: () => run('morningBrief').then(() => toast('📧 Test email sent')).catch(e => toast('⚠️ ' + (e.message || e))),
+  openFocus: d => openFocus(d.id), fToggle: () => fToggle(), fFinish: () => fFinish(),
+  fClose: () => { if (F.run && !confirm('Stop the timer without logging?')) return; F.run = false; clearInterval(F.id); F.left = F.total; document.title = 'Sunil OS'; document.getElementById('focus').classList.remove('show'); },
+  fSet: d => { if (F.run) return toast('Pause first'); F.total = F.left = d.m * 60; openFocus(F.block); }
+};
+const PRAISE = ['Locked in 🔒', 'Future CFO move 📈', 'One step closer to 21 Dec 🎯', 'Streak alive ⚡', 'That\'s how toppers do it 🏅', 'USA is calling 🇺🇸', 'Beast mode 💪'];
+function taskForm(x){ form(x.ID ? 'Edit task' : 'New task', [{name: 'Title', label: 'Task', value: x.Title, req: true}, {name: 'DueDate', label: 'Due date', type: 'date', value: x.ID ? x.DueDate : today()},
+  {name: 'Priority', label: 'Priority', type: 'select', options: ['High', 'Medium', 'Low'], value: x.Priority || 'Medium'}, {name: 'Category', label: 'Category', type: 'select', options: ['CPA', 'Work', 'Family', 'Health', 'Finance', 'Personal', 'Course', 'Discipline', 'Idea'], value: x.Category || 'CPA'}],
+  o => put('Tasks', {ID: x.ID, Status: x.Status || 'Pending', ...o}), x.ID ? {onDelete: () => drop('Tasks', x.ID)} : {}); }
+function goalForm(g){ form(g.ID ? 'Edit goal' : 'New goal', [{name: 'Title', label: 'Goal', value: g.Title, req: true}, {name: 'Why', label: 'Why it matters (you will read this on bad days)', type: 'textarea', value: g.Why}, {name: 'TargetDate', label: 'Target date', type: 'date', value: g.TargetDate},
+  {name: 'Status', label: 'Status', type: 'select', options: ['Active', 'Achieved', 'Paused', 'Dropped'], value: g.Status || 'Active'}], o => { put('Goals', {ID: g.ID, Category: g.Category || 'CPA', Progress: g.Progress || 0, ...o}); if (o.Status === 'Achieved') confetti(innerWidth / 2, innerHeight / 3, 160, true); }, g.ID ? {onDelete: () => drop('Goals', g.ID)} : {}); }
+function courseForm(c){ form(c.ID ? 'Edit course' : 'New course', [{name: 'Name', label: 'Course', value: c.Name, req: true}, {name: 'TotalUnits', label: 'Total modules', type: 'number', value: c.TotalUnits || 10}, {name: 'DoneUnits', label: 'Completed', type: 'number', value: c.DoneUnits || 0}, {name: 'TargetDate', label: 'Finish by', type: 'date', value: c.TargetDate}],
+  o => put('Courses', {ID: c.ID, Status: c.Status || 'In Progress', ...o}), c.ID ? {onDelete: () => drop('Courses', c.ID)} : {}); }
+function ideaForm(i){ form(i.ID ? 'Edit idea' : 'Capture an idea', [{name: 'Title', label: 'Idea', value: i.Title, req: true}, {name: 'Detail', label: 'Details', type: 'textarea', value: i.Detail}, {name: 'NextStep', label: 'Very next physical step', value: i.NextStep},
+  {name: 'Status', label: 'Stage', type: 'select', options: ['Captured', 'Evaluating', 'In Progress', 'Implemented', 'Dropped'], value: i.Status || 'Captured'}],
+  o => { put('Ideas', {ID: i.ID, Date: i.Date || today(), Impact: i.Impact || 'Medium', ...o}); if (o.Status === 'In Progress' && o.NextStep && (!i.ID || i.Status !== 'In Progress')) { put('Tasks', {Title: o.NextStep, Category: 'Idea', Priority: 'Medium', DueDate: today(), Status: 'Pending'}); toast('Next step added to today\'s tasks'); } },
+  i.ID ? {onDelete: () => drop('Ideas', i.ID)} : {}); }
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const fn = A[el.dataset.act]; if (fn) { e.preventDefault(); fn(el.dataset, el, e); }
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.chg) return;
+  if (el.dataset.chg === 'pickDay') { DATE = el.value || today(); render(); }
+  if (el.dataset.chg === 'goalProg') { put('Goals', {ID: el.dataset.id, Progress: el.value}); if (el.value === '100') confetti(innerWidth / 2, innerHeight / 3, 120, true); }
+});
+document.addEventListener('submit', e => {
+  const f = e.target; if (!f.dataset || !f.dataset.sub) return; e.preventDefault();
+  const v = f.t ? f.t.value.trim() : ''; if (!v) return;
+  if (f.dataset.sub === 'quickTask') { put('Tasks', {Title: v, DueDate: f.dataset.d, Priority: 'Medium', Category: 'CPA', Status: 'Pending'}); toast('Task added'); }
+  if (f.dataset.sub === 'thought') { put('Thoughts', {Date: today(), Mood: '', Text: v}); toast('Saved'); }
+  if (f.dataset.sub === 'addHabit') { put('Habits', {Name: v, Icon: (f.i && f.i.value.trim()) || '✅', Order: D.Habits.length + 1, Active: 'Yes'}, true); settingsSheet('habits'); render(); }
+});
+
+start();
 </script>
 </body>
 </html>
