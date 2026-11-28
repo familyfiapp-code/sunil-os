@@ -250,6 +250,18 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(9,14,28,.9
 .fring svg{width:100%;height:100%;transform:rotate(-90deg)}
 .fring .tx{position:absolute;inset:0;display:grid;place-items:center;align-content:center}
 .fring .tx b{font-size:clamp(46px,13vw,68px);font-weight:800;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+.fring .tx{grid-template-columns:auto auto auto;column-gap:6px}
+.fring .tx b{grid-column:2;cursor:pointer;border-bottom:2px dashed transparent}
+.fring .tx b:hover{border-bottom-color:rgba(251,191,36,.5)}
+.fring .tx #fsub,.fring .tx #fend{grid-column:1/4}
+.fstep{width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:var(--card2);color:var(--text);font-weight:800;font-size:14px;cursor:pointer}
+.fstep:active{transform:scale(.94)}
+.fpre{justify-content:center;max-width:420px}
+.fpre button{cursor:pointer}
+.fcustom{display:flex;gap:8px;justify-content:center;margin:0 0 10px}
+.fcustom input{width:110px;padding:9px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--card2);color:var(--text);font:inherit;font-size:16px;text-align:center}
+.linkbtn{background:none;border:0;color:var(--muted);font-size:12.5px;text-decoration:underline;margin-top:8px;cursor:pointer}
+.fpill{position:fixed;right:14px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:55;border:0;border-radius:999px;padding:10px 16px;font-weight:800;font-size:15px;color:#1a1205;background:linear-gradient(135deg,#fbbf24,#f97316);box-shadow:0 8px 24px rgba(249,115,22,.35);font-variant-numeric:tabular-nums;cursor:pointer}
 .focus .what{max-width:520px;font-size:17px;font-weight:600;line-height:1.4}
 .focus .rule{color:var(--muted);font-size:13px;margin-top:6px}
 
@@ -295,15 +307,21 @@ nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(9,14,28,.9
   <div class="fring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" fill="none" stroke="rgba(148,163,184,.15)" stroke-width="7"/>
     <circle id="farc" cx="60" cy="60" r="54" fill="none" stroke="url(#fg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="0"/>
     <defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs></svg>
-    <div class="tx"><b id="ftime">50:00</b><span class="muted small" id="fsub">ready</span></div></div>
-  <div class="seg" id="fpre" style="justify-content:center"></div>
+    <div class="tx"><button class="fstep" data-act="fAdj" data-d="-5" title="5 minutes less">−5</button>
+      <b id="ftime" data-act="fEdit" title="Tap to type minutes">50:00</b>
+      <button class="fstep" data-act="fAdj" data-d="5" title="5 minutes more">+5</button>
+      <span class="muted small" id="fsub">ready</span><span class="tiny muted" id="fend"></span></div></div>
+  <div class="seg fpre" id="fpre"></div>
+  <form class="fcustom hidden" id="fcustom"><input id="fmin" type="number" inputmode="numeric" min="1" max="240" placeholder="Minutes"><button class="btn sm">Set</button><button type="button" class="btn ghost sm" data-act="fEditCancel">Cancel</button></form>
   <div class="row" style="justify-content:center;margin-top:6px">
     <button class="btn" id="fgo" data-act="fToggle" style="min-width:140px">▶ Start</button>
-    <button class="btn ghost" data-act="fFinish">✓ Finish</button>
-    <button class="btn ghost" data-act="fClose">Close</button>
+    <button class="btn ghost" data-act="fFinish">✓ Finish &amp; log</button>
+    <button class="btn ghost" data-act="fClose" id="fclose">Close</button>
   </div>
+  <button class="linkbtn hidden" id="freset" data-act="fReset">Stop without logging</button>
   <div class="rule">Phone in another room. One task only. If the urge to scroll hits, breathe 5 times and continue.</div>
 </div>
+<button class="fpill hidden" id="fpill" data-act="openFocus"></button>
 
 <div id="toast"></div>
 
@@ -393,13 +411,14 @@ function drop(sheet, id){ D[sheet] = (D[sheet] || []).filter(r => r.ID !== id); 
 function setting(k, v){ const r = D.Settings.find(x => x.Key === k); if (r) r.Value = String(v); else D.Settings.push({Key: k, Value: String(v)}); queue('setSetting', k, v); }
 
 function show(d){ SHEETS.forEach(n => d[n] = d[n] || []); D = d; DATE = DATE || today(); document.getElementById('boot').style.display = 'none'; render(); }
-let PENDING_LOAD = false;
+let PENDING_LOAD = false, BK = null;
+function checkBackup(){ run('dataInfo').then(i => { BK = i; if (D) render(); }).catch(() => {}); }
 function load(){
   if (busy()) { PENDING_LOAD = true; return Promise.resolve(); }   // never overwrite unsaved changes
   PENDING_LOAD = false;
   return run('getAll').then(d => {
     if (!d || busy()) { if (d) PENDING_LOAD = true; return; }
-    LOADED_AT = Date.now(); LS.set('sos_cache', JSON.stringify(d));
+    LOADED_AT = Date.now(); LS.set('sos_cache', JSON.stringify(d)); if (!BK) setTimeout(checkBackup, 1500);
     if (!document.querySelector('.ov.show')) show(d); else D = Object.assign(D || {}, d);
   }).catch(e => { if (e && e.message === 'AUTH') return;
     if (D) { setSave('err'); return; }
@@ -432,6 +451,7 @@ function lockScreen(msg){
 function lockDevice(){ if (OPS.length && !confirm('Some changes are still saving. Lock anyway?')) return; ['sos_key', 'sos_cache', 'sos_q'].forEach(LS.del); location.reload(); }
 
 function start(){
+  setTimeout(fRestore, 0);
   if (!KEY && !window.__MOCK_RUN) return lockScreen();
   let c = null; try { c = JSON.parse(LS.get('sos_cache') || 'null'); } catch (e) {}
   if (c && c.Settings) show(c);              // instant: last-known data, then refresh
@@ -543,7 +563,8 @@ function render(){
     : '<button class="nb ' + (TAB === k ? 'on' : '') + '" data-act="tab" data-t="' + k + '">' + ICONS[k] + l + '</button>').join('');
   const html = ({today: vToday, plan: vPlan, progress: vProgress, journal: vJournal})[TAB]();
   const m = document.getElementById('main');
-  const y = window.scrollY; m.innerHTML = '<div class="' + (render._tab !== TAB ? 'fade' : '') + '">' + html + '</div>'; window.scrollTo(0, render._tab !== TAB ? 0 : y);
+  const bw = BK && (BK.backupError || (BK.hoursSince != null && BK.hoursSince > 36) || !BK.lastBackup) ? '<div class="card" style="border-color:rgba(248,113,113,.5);margin-bottom:12px;padding:12px 14px"><b>⚠️ Daily backup needs attention</b><div class="small muted" style="margin-top:4px">' + (BK.backupError ? 'Google Drive permission is missing, so backups can\'t go into your Backups folder.' : BK.lastBackup ? 'Last backup was ' + BK.hoursSince + ' hours ago.' : 'No backup has been made yet.') + ' Your data itself is safe in your Google Sheet.</div><div class="row" style="margin-top:8px"><button class="btn sm" data-act="backupFix">Back up now</button><button class="btn ghost sm" data-act="openSettings">Details</button></div></div>' : '';
+  const y = window.scrollY; m.innerHTML = '<div class="' + (render._tab !== TAB ? 'fade' : '') + '">' + bw + html + '</div>'; window.scrollTo(0, render._tab !== TAB ? 0 : y);
   render._tab = TAB;
 }
 
@@ -923,13 +944,13 @@ function checkin(){
 }
 function socialSheet(){
   const t = today(), r = D.Distraction.find(x => x.Date === t) || {ID: 'x' + ymd(t), Date: t, Instagram: 0, YouTube: 0, Resisted: 0};
-  const add = (f, n) => { r[f] = num(r[f]) + n; put('Distraction', {ID: r.ID, Date: t, Instagram: num(r.Instagram), YouTube: num(r.YouTube), Resisted: num(r.Resisted)}, true); socialSheet(); render(); };
+  const add = (f, n, abs) => { r[f] = Math.max(0, abs ? n : num(r[f]) + n); put('Distraction', {ID: r.ID, Date: t, Instagram: num(r.Instagram), YouTube: num(r.YouTube), Resisted: num(r.Resisted)}, true); socialSheet(); render(); };
   window.__soc = add;
   const tot = num(r.Instagram) + num(r.YouTube), lim = num(S().SocialLimitMin) || 30;
   sheet('<h3>📵 Social media today</h3><div class="small muted">Be honest. The number only helps if it\'s true.</div>' +
     '<div class="tiles" style="margin-top:14px"><div class="tile"><b>' + num(r.Instagram) + 'm</b><small>Instagram</small></div><div class="tile"><b>' + num(r.YouTube) + 'm</b><small>YouTube</small></div><div class="tile"><b class="' + (tot > lim ? 'bad' : 'good') + '">' + tot + '/' + lim + '</b><small>total · limit</small></div></div>' +
-    '<label>Instagram</label><div class="row"><button class="btn ghost sm" onclick="__soc(\'Instagram\',5)">+5 min</button><button class="btn ghost sm" onclick="__soc(\'Instagram\',15)">+15 min</button><button class="btn ghost sm" onclick="__soc(\'Instagram\',-5)">−5</button></div>' +
-    '<label>YouTube</label><div class="row"><button class="btn ghost sm" onclick="__soc(\'YouTube\',5)">+5 min</button><button class="btn ghost sm" onclick="__soc(\'YouTube\',15)">+15 min</button><button class="btn ghost sm" onclick="__soc(\'YouTube\',-5)">−5</button></div>' +
+    '<label>Instagram</label><div class="row"><button class="btn ghost sm" onclick="__soc(\'Instagram\',5)">+5 min</button><button class="btn ghost sm" onclick="__soc(\'Instagram\',15)">+15 min</button><button class="btn ghost sm" onclick="__soc(\'Instagram\',-5)">−5</button><input type="number" inputmode="numeric" min="0" placeholder="exact" style="width:76px;padding:7px" onchange="__soc(\'Instagram\',+this.value||0,1)"></div>' +
+    '<label>YouTube</label><div class="row"><button class="btn ghost sm" onclick="__soc(\'YouTube\',5)">+5 min</button><button class="btn ghost sm" onclick="__soc(\'YouTube\',15)">+15 min</button><button class="btn ghost sm" onclick="__soc(\'YouTube\',-5)">−5</button><input type="number" inputmode="numeric" min="0" placeholder="exact" style="width:76px;padding:7px" onchange="__soc(\'YouTube\',+this.value||0,1)"></div>' +
     '<button class="btn good" style="width:100%;margin-top:16px" onclick="__soc(\'Resisted\',1)">💪 I felt the urge and resisted (' + num(r.Resisted) + ')</button>' +
     (tot ? '<p class="small" style="margin:12px 0 0">' + tot + ' min ≈ <b>' + Math.floor(tot / 1.5) + ' MCQs</b> you could have solved.</p>' : '') +
     '<div class="foot"><button class="btn ghost" onclick="closeSheet()">Done</button></div>');
@@ -971,45 +992,84 @@ function settingsSheet(focus){
     F.map(([k, l, t]) => '<label>' + l + '</label>' + (t === 'textarea' ? '<textarea data-set="' + k + '">' + esc(s[k] || '') + '</textarea>' : '<input type="' + t + '" data-set="' + k + '" value="' + esc(s[k] || '') + '">')).join('') +
     '<div class="foot"><button class="btn" onclick="closeSheet()">Done</button></div>');
   document.querySelectorAll('[data-set]').forEach(el => el.addEventListener('change', () => { setting(el.dataset.set, el.value); toast('Saved'); }));
-  run('dataInfo').then(i => { if (!i) return; document.getElementById('dinfo').innerHTML = '📄 <b>' + esc(i.sheetName) + '</b> · owner ' + esc(i.owner) + '<br>🕒 Last backup: <b>' + (i.lastBackup ? esc(i.lastBackup) : 'none yet') + '</b>' + (i.folderUrl ? ' · <a target="_blank" href="' + esc(i.folderUrl) + '">open backups ↗</a>' : ''); document.getElementById('shl').href = i.sheetUrl; }).catch(() => { document.getElementById('dinfo').textContent = ''; });
-  document.getElementById('bk').onclick = e => { e.target.textContent = 'Backing up…'; run('backupNow').then(r => { toast('✅ Backup saved to your Drive'); settingsSheet(); }).catch(err => { e.target.textContent = 'Back up now'; toast('⚠️ ' + (err.message || err)); }); };
+  run('dataInfo').then(i => { if (!i) return; BK = i; document.getElementById('dinfo').innerHTML = '📄 <b>' + esc(i.sheetName) + '</b>' + (i.owner ? ' · owner ' + esc(i.owner) : '') + '<br>' + (i.backupError ? '<span style="color:var(--bad)">⚠️ ' + esc(i.backupError) + '</span><br>Fix: open Apps Script, press <b>Run</b> on <b>fixBackupsAndPermissions</b> and tick every permission box.<br>' : '') + '🕒 Last backup: <b>' + (i.lastBackup ? esc(i.lastBackup) + (i.hoursSince != null ? ' (' + i.hoursSince + ' h ago)' : '') : 'none yet') + '</b>' + (i.folderUrl ? ' · <a target="_blank" href="' + esc(i.folderUrl) + '">open backups ↗</a>' : '') + '<br>⏰ Automatic copy every night at 3 AM, last 30 kept.'; document.getElementById('shl').href = i.sheetUrl; }).catch(() => { document.getElementById('dinfo').textContent = ''; });
+  document.getElementById('bk').onclick = e => { e.target.textContent = 'Backing up…'; run('backupNow').then(r => { toast(r && r.fallback ? '⚠️ Backup saved to My Drive, but Drive permission is still missing' : '✅ Backup saved to your Drive'); settingsSheet(); }).catch(err => { e.target.textContent = 'Back up now'; toast('⚠️ ' + (err.message || err)); }); };
   run('calendarInfo').then(c => { const el = document.getElementById('cinfo'); if (el && c) el.innerHTML = c.on ? '✅ On · last sync <b>' + esc(c.last || '—') + '</b>' : 'Off'; }).catch(() => {});
   if (focus === 'habits') setTimeout(() => document.getElementById('s-habits').scrollIntoView({behavior: 'smooth'}), 80);
   if (focus === 'cal') setTimeout(() => document.getElementById('s-cal').scrollIntoView({behavior: 'smooth'}), 80);
 }
 
-/* ═════════ focus timer ═════════ */
-let F = {total: 50 * 60, left: 50 * 60, run: false, id: null, block: null, t0: 0};
-function openFocus(blockId){
-  const b = blockId ? D.Plan.find(p => p.ID === blockId) : null;
-  F.block = b ? b.ID : null;
-  if (!F.run) { let m = 50; if (b) { const x = parseT(b.Time); if (x.e != null) { const n = nowMin(); m = (b.Date === today() && n > x.s && n < x.e) ? x.e - n : x.e - x.s; } } F.total = F.left = Math.max(5, Math.min(240, m)) * 60; }
-  document.getElementById('fwhat').textContent = b ? b.Block : 'Free focus block: pick one task and stay on it';
-  document.getElementById('fpre').innerHTML = [25, 50, 90].map(m => '<button class="' + (F.total === m * 60 ? 'on' : '') + '" data-act="fSet" data-m="' + m + '">' + m + ' min</button>').join('');
-  fDraw(); document.getElementById('focus').classList.add('show');
+/* ═════════ focus timer (v4.1: presets, ±5, type any minutes, survives reload, minimise) ═════════ */
+let F = {total: 50 * 60, left: 50 * 60, run: false, id: null, block: null, t0: 0, what: ''};
+const PRESETS = [15, 25, 35, 45, 50, 60, 90];
+function fSave(){ LS.set('sos_focus', JSON.stringify({total: F.total, left: F.left, run: F.run, block: F.block, t0: F.t0, what: F.what})); }
+function fRestore(){
+  let o = null; try { o = JSON.parse(LS.get('sos_focus') || 'null'); } catch (e) {}
+  if (!o || !(o.run || o.left < o.total)) return;
+  Object.assign(F, o);
+  if (F.run) { F.left = Math.max(0, F.total - Math.round((Date.now() - F.t0) / 1000)); fTick(); }
+  fPill();
 }
+function blockMinutes(b){ let m = 50; if (b) { const x = parseT(b.Time); if (x.e != null) { const n = nowMin(); m = (b.Date === today() && n > x.s && n < x.e) ? x.e - n : x.e - x.s; } } return Math.max(1, Math.min(240, m)); }
+function openFocus(blockId){
+  const idle = !F.run && F.left >= F.total;             // nothing in progress → set up fresh
+  if (idle && blockId !== undefined) {
+    const b = blockId ? D.Plan.find(p => p.ID === blockId) : null;
+    F.block = b ? b.ID : null; F.what = b ? b.Block : '';
+    F.total = F.left = blockMinutes(b) * 60;
+  }
+  document.getElementById('fwhat').textContent = F.what || 'Free focus block: pick one task and stay on it';
+  document.getElementById('fcustom').classList.add('hidden');
+  fDraw(); document.getElementById('focus').classList.add('show'); document.getElementById('fpill').classList.add('hidden');
+}
+function fPresets(){
+  const cur = F.total / 60, idle = !F.run && F.left >= F.total;
+  document.getElementById('fpre').innerHTML = idle ? PRESETS.map(m => '<button type="button" class="' + (cur === m ? 'on' : '') + '" data-act="fSet" data-m="' + m + '">' + m + 'm</button>').join('') +
+    '<button type="button" class="' + (PRESETS.includes(cur) ? '' : 'on') + '" data-act="fEdit">' + (PRESETS.includes(cur) ? '✎ Custom' : '✎ ' + cur + 'm') + '</button>' : '';
+}
+const fmt = sec => { const mm = Math.floor(sec / 60), ss = sec % 60; return mm >= 60 ? Math.floor(mm / 60) + ':' + pad(mm % 60) + ':' + pad(ss) : pad(mm) + ':' + pad(ss); };
 function fDraw(){
-  const mm = Math.floor(F.left / 60), ss = F.left % 60;
-  document.getElementById('ftime').textContent = mm >= 60 ? Math.floor(mm / 60) + ':' + pad(mm % 60) + ':' + pad(ss) : pad(mm) + ':' + pad(ss);
-  document.getElementById('fsub').textContent = F.run ? 'focusing' : F.left < F.total ? 'paused' : 'ready';
+  const idle = !F.run && F.left >= F.total;
+  document.getElementById('ftime').textContent = fmt(F.left);
+  document.getElementById('fsub').textContent = F.run ? 'focusing' : idle ? 'ready · tap time to type minutes' : 'paused';
+  const end = new Date(Date.now() + F.left * 1000);
+  document.getElementById('fend').textContent = F.run ? 'ends at ' + pad(end.getHours()) + ':' + pad(end.getMinutes()) : '';
   document.getElementById('farc').style.strokeDashoffset = (339.3 * (1 - F.left / F.total)).toFixed(1);
-  document.getElementById('fgo').textContent = F.run ? '⏸ Pause' : F.left < F.total ? '▶ Resume' : '▶ Start';
-  if (F.run) document.title = '⏱ ' + document.getElementById('ftime').textContent + ' · Sunil OS';
+  document.getElementById('fgo').textContent = F.run ? '⏸ Pause' : idle ? '▶ Start' : '▶ Resume';
+  document.getElementById('fclose').textContent = F.run || !idle ? '↘ Minimise' : 'Close';
+  document.getElementById('freset').classList.toggle('hidden', idle);
+  fPresets(); fPill();
+  document.title = F.run ? '⏱ ' + fmt(F.left) + ' · Sunil OS' : 'Sunil OS';
+}
+function fPill(){
+  const p = document.getElementById('fpill'), active = F.run || F.left < F.total;
+  const hidden = !active || document.getElementById('focus').classList.contains('show');
+  p.classList.toggle('hidden', hidden); if (!hidden) p.textContent = (F.run ? '⏱ ' : '⏸ ') + fmt(F.left);
+}
+function fSetMinutes(m){
+  m = Math.round(Number(m)); if (!(m >= 1 && m <= 240)) return toast('Choose 1–240 minutes');
+  if (F.run || F.left < F.total) {                      // in progress: change the target, keep time already done
+    const done = F.total - F.left; if (m * 60 <= done) return toast('You have already done ' + Math.floor(done / 60) + ' min');
+    F.total = m * 60; F.left = F.total - done; if (F.run) F.t0 = Date.now() - done * 1000;
+  } else F.total = F.left = m * 60;
+  fSave(); fDraw();
 }
 let WL = null;
+function fTick(){ clearInterval(F.id); F.id = setInterval(() => { F.left = Math.max(0, F.total - Math.round((Date.now() - F.t0) / 1000)); fDraw(); if (!F.left) { beep(); try { navigator.vibrate && navigator.vibrate([300, 150, 300]); } catch (e) {} fFinish(true); } }, 500); }
 function fToggle(){
-  if (F.run) { F.run = false; clearInterval(F.id); document.title = 'Sunil OS'; try { WL && WL.release(); } catch (e) {} }
-  else { F.run = true; F.t0 = Date.now() - (F.total - F.left) * 1000; F.id = setInterval(() => { F.left = Math.max(0, F.total - Math.round((Date.now() - F.t0) / 1000)); fDraw(); if (!F.left) { beep(); fFinish(); } }, 500);
+  if (F.run) { F.run = false; clearInterval(F.id); try { WL && WL.release(); } catch (e) {} }
+  else { F.run = true; F.t0 = Date.now() - (F.total - F.left) * 1000; fTick();
     try { navigator.wakeLock && navigator.wakeLock.request('screen').then(w => WL = w).catch(() => {}); } catch (e) {} }
-  fDraw();
+  fSave(); fDraw();
 }
-function fFinish(){
-  const mins = Math.round((F.total - F.left) / 60); F.run = false; clearInterval(F.id); document.title = 'Sunil OS';
+function fReset(){ F.run = false; clearInterval(F.id); F.left = F.total; F.block = null; F.what = ''; LS.del('sos_focus'); fDraw(); }
+function fFinish(auto){
+  const mins = Math.round((F.total - F.left) / 60); F.run = false; clearInterval(F.id);
   document.getElementById('focus').classList.remove('show');
-  if (mins < 1) { F.left = F.total; return toast('Nothing to log yet'); }
+  if (mins < 1) { fReset(); return toast('Nothing to log yet'); }
   if (F.block) { put('Plan', {ID: F.block, Done: 'Yes'}); toast('✓ Block done · ' + mins + ' min focused'); }
-  else { put('StudyLog', {Date: today(), Section: (nextExam() || {}).Section || 'FAR', Minutes: mins, Notes: 'Focus timer'}); toast('✓ ' + mins + ' min logged'); }
-  confetti(innerWidth / 2, innerHeight / 2, 90, true); F.left = F.total; F.block = null;
+  else { put('StudyLog', {Date: today(), Section: (nextExam() || {}).Section || 'FAR', Minutes: mins, Notes: 'Focus timer' + (F.what ? ': ' + F.what : '')}); toast('✓ ' + mins + ' min logged' + (auto ? ' · take a 5-min break' : '')); }
+  confetti(innerWidth / 2, innerHeight / 2, 90, true); fReset();
 }
 function beep(){ try { const a = new (window.AudioContext || window.webkitAudioContext)(); [0, .35, .7].forEach(t => { const o = a.createOscillator(); o.frequency.value = 880; o.connect(a.destination); o.start(a.currentTime + t); o.stop(a.currentTime + t + .22); }); } catch (e) {} }
 
@@ -1070,11 +1130,16 @@ const A = {
   delThought: d => drop('Thoughts', d.id),
   openSettings: d => settingsSheet(d.s),
   delHabit: d => { put('Habits', {ID: d.id, Active: 'No'}, true); settingsSheet('habits'); render(); },
+  backupFix: (d, el) => { el.textContent = 'Backing up…'; run('backupNow').then(r => { toast(r && r.fallback ? '⚠️ Saved to My Drive · fix Drive permission (see Settings)' : '✅ Backup saved to your Drive'); checkBackup(); }).catch(e => { el.textContent = 'Back up now'; toast('⚠️ ' + (e.message || e)); }); },
   rem: d => run(d.on === '1' ? 'installTriggers' : 'removeTriggers').then(r => toast(r || 'Done')).catch(e => toast('⚠️ ' + (e.message || e))),
   testMail: () => run('morningBrief').then(() => toast('📧 Test email sent')).catch(e => toast('⚠️ ' + (e.message || e))),
-  openFocus: d => openFocus(d.id), fToggle: () => fToggle(), fFinish: () => fFinish(),
-  fClose: () => { if (F.run && !confirm('Stop the timer without logging?')) return; F.run = false; clearInterval(F.id); F.left = F.total; document.title = 'Sunil OS'; document.getElementById('focus').classList.remove('show'); },
-  fSet: d => { if (F.run) return toast('Pause first'); F.total = F.left = d.m * 60; openFocus(F.block); }
+  openFocus: d => openFocus(d.id === undefined && (F.run || F.left < F.total) ? undefined : (d.id || null)), fToggle: () => fToggle(), fFinish: () => fFinish(),
+  fClose: () => { document.getElementById('focus').classList.remove('show'); fPill(); if (F.run) toast('Timer keeps running · tap the orange pill to return'); },
+  fReset: () => { if (confirm('Stop this session without logging the time?')) { fReset(); } },
+  fAdj: d => fSetMinutes(F.total / 60 + Number(d.d)),
+  fEdit: () => { const f = document.getElementById('fcustom'); f.classList.remove('hidden'); const i = document.getElementById('fmin'); i.value = Math.round(F.total / 60); i.focus(); i.select(); },
+  fEditCancel: () => document.getElementById('fcustom').classList.add('hidden'),
+  fSet: d => fSetMinutes(d.m)
 };
 const PRAISE = ['Locked in 🔒', 'Future CFO move 📈', 'One step closer to 21 Dec 🎯', 'Streak alive ⚡', 'That\'s how toppers do it 🏅', 'USA is calling 🇺🇸', 'Beast mode 💪'];
 function taskForm(x){ form(x.ID ? 'Edit task' : 'New task', [{name: 'Title', label: 'Task', value: x.Title, req: true}, {name: 'DueDate', label: 'Due date', type: 'date', value: x.ID ? x.DueDate : today()},
@@ -1099,6 +1164,7 @@ document.addEventListener('change', e => {
   if (el.dataset.chg === 'goalProg') { put('Goals', {ID: el.dataset.id, Progress: el.value}); if (el.value === '100') confetti(innerWidth / 2, innerHeight / 3, 120, true); }
 });
 document.addEventListener('submit', e => {
+  if (e.target.id === 'fcustom') { e.preventDefault(); document.getElementById('fcustom').classList.add('hidden'); fSetMinutes(document.getElementById('fmin').value); return; }
   const f = e.target; if (!f.dataset || !f.dataset.sub) return; e.preventDefault();
   const v = f.t ? f.t.value.trim() : ''; if (!v) return;
   if (f.dataset.sub === 'quickTask') { put('Tasks', {Title: v, DueDate: f.dataset.d, Priority: 'Medium', Category: 'CPA', Status: 'Pending'}); toast('Task added'); }
